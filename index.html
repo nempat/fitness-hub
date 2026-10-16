@@ -3,337 +3,446 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101410">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080a08">
 <title>Fitness Hub | Train Beyond Limits</title>
-<meta name="description" content="Explore Fitness Hub memberships and start your fitness journey today.">
+<meta name="description" content="Discover your strength at Fitness Hub. Explore membership plans and join our fitness community.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#101410;--panel:#191f19;--panel2:#222a21;
-  --green:#b9ff66;--text:#f5f7f2;--muted:#a6b0a3;
-  --line:#303a30;--red:#ff7777;
+:root {
+  --bg:#080a08;
+  --panel:#111511;
+  --green:#c4ff39;
+  --text:#f5f7f1;
+  --muted:#92998f;
+  --border:#292e27;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:20px}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}
 button,input,select{font:inherit}
 button{cursor:pointer}
-button:disabled{opacity:.55;cursor:not-allowed}
-a{color:inherit}
-.wrap{width:min(1120px,92%);margin:auto}
-header{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:21px 0;border-bottom:1px solid var(--line)}
-.brand{font-size:23px;font-weight:950;letter-spacing:-1px}
-.brand span,h1 span,.highlight{color:var(--green)}
-.nav{display:flex;flex-wrap:wrap;gap:9px}
-.btn{display:inline-block;border:1px solid var(--line);border-radius:11px;padding:12px 16px;background:var(--panel2);color:var(--text);font-weight:750;text-decoration:none}
-.btn.primary{background:var(--green);color:#14200d;border-color:var(--green)}
-.btn:hover{filter:brightness(1.08)}
+.container{width:min(1160px,91%);margin:auto}
+header{position:sticky;top:0;z-index:50;background:#080a08ed;backdrop-filter:blur(15px);border-bottom:1px solid var(--border)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:19px;font-weight:900;letter-spacing:-1px}
+.logo span{color:var(--green)}
+.logo small{display:block;color:var(--muted);font-size:9px;letter-spacing:3px;font-weight:700}
+.navlinks{display:flex;align-items:center;gap:27px;font-size:13px;color:#c6cbc2}
+.navlinks a:hover{color:var(--green)}
+.btn{border:0;border-radius:5px;padding:13px 19px;font-weight:800;font-size:12px;letter-spacing:.5px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.btn-primary{background:var(--green);color:#10130b}
+.btn-primary:hover{background:#d8ff79;transform:translateY(-2px)}
+.btn-outline{border:1px solid #454b40;background:transparent;color:white}
+.btn-outline:hover{border-color:var(--green);color:var(--green)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.hero{min-height:620px;display:flex;align-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at 80% 45%,#39511d65,transparent 38%),linear-gradient(110deg,#080a08 35%,#111a0d 100%)}
+.hero:before{content:"";position:absolute;right:-5%;top:5%;width:57%;height:90%;background:linear-gradient(0deg,#080a08 0%,transparent 38%),linear-gradient(90deg,#080a08 0%,transparent 45%),url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=85') center/cover;opacity:.65;filter:grayscale(65%)}
+.hero:after{content:"";position:absolute;right:5%;top:14%;width:320px;height:320px;border:1px solid #c4ff392b;border-radius:50%;box-shadow:0 0 0 45px #c4ff3908,0 0 0 90px #c4ff3905;pointer-events:none}
+.hero-content{position:relative;z-index:2;padding:95px 0;max-width:680px}
+.eyebrow{display:flex;align-items:center;gap:10px;color:var(--green);font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase}
+.eyebrow:before{content:"";width:27px;height:2px;background:var(--green)}
+h1,h2,h3,.display{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;line-height:.98}
+h1{font-size:clamp(68px,10vw,120px);font-weight:900;letter-spacing:-2px;margin:24px 0}
+h1 span{color:var(--green)}
+.hero p{max-width:440px;color:#c1c7bb;font-size:15px;margin-bottom:30px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-note{margin-top:43px;display:flex;gap:30px;flex-wrap:wrap;color:#c0c7b9;font-size:11px;font-weight:700;letter-spacing:1px}
+.hero-note span:before{content:"✓";color:var(--green);margin-right:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border)}
+.stat{padding:25px 12px;text-align:center;border-right:1px solid var(--border)}
+.stat:last-child{border:0}
+.stat strong{display:block;font-family:'Barlow Condensed';font-size:32px;color:var(--green)}
+.stat span{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+section{padding:90px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:38px}
+.section-head h2{font-size:clamp(42px,6vw,65px);margin-top:12px}
+.section-head p{max-width:390px;color:var(--muted);font-size:13px}
+.green{color:var(--green)}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.plan{background:var(--panel);border:1px solid var(--border);padding:29px;position:relative;transition:.25s}
+.plan:hover{transform:translateY(-5px);border-color:#789c36}
+.plan.featured{border-color:var(--green);background:linear-gradient(155deg,#1b2412,#101310 65%)}
+.plan-tag{font-size:9px;letter-spacing:2px;font-weight:900;color:var(--green);text-transform:uppercase}
+.plan h3{font-size:30px;margin:17px 0 7px}
+.price{font-size:38px;font-weight:900;letter-spacing:-2px;margin:16px 0 0}
+.price small{font-size:12px;color:var(--muted);letter-spacing:0}
+.plan-desc{font-size:12px;color:var(--muted);padding-bottom:23px;border-bottom:1px solid var(--border)}
+.plan ul{list-style:none;margin:24px 0 28px;display:grid;gap:12px;font-size:12px;color:#d7ddd1}
+.plan li:before{content:"✓";color:var(--green);margin-right:10px}
+.plan .btn{width:100%}
+.features{background:#0c0f0b;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.feature{padding:26px;background:var(--panel);border:1px solid var(--border);min-height:175px}
+.feature-icon{font-size:25px;color:var(--green);margin-bottom:16px}
+.feature h3{font-size:24px;margin-bottom:9px}
+.feature p{font-size:12px;color:var(--muted)}
+.join-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.join-step{border-top:1px solid #4d593e;padding-top:20px}
+.join-step strong{font-family:'Barlow Condensed';font-size:43px;color:var(--green)}
+.join-step h3{font-size:24px;margin:8px 0}
+.join-step p{font-size:12px;color:var(--muted)}
+.banner{background:var(--green);color:#10140b;padding:42px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.banner h2{font-size:clamp(35px,5vw,53px)}
+.banner p{font-size:12px;margin-top:8px}
+.banner .btn{background:#10140b;color:white}
+.faq-list{display:grid;gap:10px;max-width:850px}
+details{background:var(--panel);border:1px solid var(--border);padding:19px 22px}
+summary{cursor:pointer;font-size:13px;font-weight:700}
+details p{font-size:12px;color:var(--muted);padding-top:12px}
+#account{background:#0c0f0b;border-top:1px solid var(--border)}
+.account-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;align-items:start}
+.panel{padding:26px;background:var(--panel);border:1px solid var(--border);min-width:0}
+.panel h3{font-size:27px;margin-bottom:17px}
+.field{display:grid;gap:6px;margin-bottom:13px}
+.field label{font-size:11px;color:#c6cec0;font-weight:700}
+.field input,.field select{width:100%;background:#080a08;border:1px solid #363d31;border-radius:4px;padding:12px;color:white;outline:none}
+.field input:focus,.field select:focus{border-color:var(--green)}
+.field select option{background:#111}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.small-text{font-size:11px;color:var(--muted);margin-top:12px}
+.status{padding:12px;background:#080a08;border:1px solid var(--border);font-size:12px;margin:12px 0;overflow-wrap:anywhere}
 .hidden{display:none!important}
-.eyebrow{color:var(--green);font-size:11px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase}
-h1{font-size:clamp(43px,6.5vw,75px);line-height:.99;letter-spacing:-3px;margin:17px 0}
-h2{font-size:clamp(27px,4vw,38px);letter-spacing:-1.5px;margin:12px 0}
-h3{margin-top:9px}
-p{line-height:1.7}
-.muted{color:var(--muted)}
-.hero{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:25px;padding:32px;margin-top:28px;border:1px solid var(--line);border-radius:25px;overflow:hidden;background:radial-gradient(ellipse at 85% 45%,#456b3150,transparent 45%),linear-gradient(135deg,#1b2419,#101410 72%)}
-.hero-content{padding:20px 0}
-.hero .sub{max-width:560px;color:var(--muted)}
-.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
-.hero-stats{display:flex;flex-wrap:wrap;gap:25px;margin-top:35px}
-.hero-stats div{display:grid;gap:5px}
-.hero-stats strong{font-size:23px;color:var(--green)}
-.hero-stats span{font-size:11px;color:var(--muted)}
-.hero-art{position:relative;min-height:350px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid #78915e55;border-radius:20px;background:linear-gradient(145deg,#293b22,#141a13 75%)}
-.art-circle{position:absolute;width:240px;height:240px;border:1px solid #b9ff6655;border-radius:50%;box-shadow:0 0 0 24px #b9ff6608,0 0 0 48px #b9ff6605}
-.art-number{position:relative;z-index:1;font-size:clamp(105px,15vw,175px);font-weight:1000;letter-spacing:-13px;color:#d5ffac}
-.art-number span{color:white}
-.art-label,.art-bottom{position:absolute;font-size:10px;font-weight:800;letter-spacing:2px;line-height:1.7}
-.art-label{top:20px;left:20px;color:#d7edc8}
-.art-bottom{bottom:19px;right:17px;color:var(--muted);text-align:right}
-.section{padding:46px 0 15px}
-.section-intro{max-width:640px}
-.plans,.info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
-.card,.info-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:23px;min-width:0}
-.card.featured{border-color:var(--green);box-shadow:0 0 30px #b9ff660a}
-.tag{color:var(--green);font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
-.price{font-size:34px;font-weight:900;letter-spacing:-1px;margin:14px 0 3px}
-.card ul{padding-left:19px;color:var(--muted);line-height:2;min-height:90px}
-.card .btn{width:100%;margin-top:8px}
-.info-icon{font-size:27px;margin-bottom:13px}
-.info-card h3{margin-bottom:7px}
-.info-card p{color:var(--muted);font-size:14px;line-height:1.8}
-.steps-number{font-size:28px;font-weight:950;color:var(--green)}
-.layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:17px;align-items:start}
-.field{display:grid;gap:7px;margin:14px 0}
-label{font-size:13px;color:var(--muted)}
-input,select{width:100%;padding:13px;border-radius:10px;border:1px solid var(--line);background:#111711;color:var(--text)}
-input:focus,select:focus{outline:1px solid var(--green)}
-.notice{padding:13px;border-radius:11px;background:var(--panel2);color:var(--muted);font-size:13px;line-height:1.7}
-.tabs,.actions{display:flex;gap:8px;flex-wrap:wrap}
-.tabs button{flex:1}
-.status{font-size:14px;line-height:1.6;overflow-wrap:anywhere;margin-top:12px}
-.error{color:var(--red)}.success{color:var(--green)}
-.request{border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0;overflow-wrap:anywhere}
-.request-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.pill{display:inline-block;padding:5px 9px;border-radius:50px;background:var(--panel2);font-size:11px;font-weight:900;text-transform:uppercase}
-.pending{color:#ffe08a}.approved{color:var(--green)}.rejected{color:var(--red)}
-.faq-list{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:0 20px;margin-top:20px}
-.faq-item{padding:18px 0;border-bottom:1px solid var(--line)}
-.faq-item:last-child{border-bottom:0}
-.faq-item summary{font-weight:750;cursor:pointer}
-.faq-item p{color:var(--muted);font-size:14px}
-.location-card{display:grid;grid-template-columns:1fr 1fr;gap:22px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;margin-top:20px}
-.map-panel{min-height:260px;border-radius:15px;background:radial-gradient(ellipse at center,#31462a,#182018 75%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
-.map-panel .pin{font-size:43px}
-footer{margin-top:45px;border-top:1px solid var(--line);padding:25px 0 40px;color:var(--muted);font-size:13px}
-.footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:12px}
-@media(max-width:760px){
-  header{align-items:flex-start;flex-direction:column}
-  .hero{grid-template-columns:1fr;padding:22px}
-  .hero-content{padding:8px 0}
-  .hero-art{min-height:245px}
-  .plans,.info-grid,.layout,.location-card{grid-template-columns:1fr}
-  h1{letter-spacing:-2px}
-  .hero-stats{gap:17px}
-  .section{padding-top:35px}
+.request{border:1px solid var(--border);padding:16px;margin-top:12px;background:#0c0f0b}
+.request h4{font-size:13px;margin-bottom:5px}
+.request p{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+.request-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.request-actions button{padding:8px 10px;font-size:10px}
+.pill{display:inline-block;font-size:9px;text-transform:uppercase;letter-spacing:1px;padding:4px 7px;border:1px solid #566044;color:var(--green);margin-top:7px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.contact-card{padding:25px;border:1px solid var(--border);background:var(--panel)}
+.contact-card h3{font-size:25px;margin-bottom:8px}
+.contact-card p{color:var(--muted);font-size:12px;margin-bottom:12px}
+footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted);font-size:11px}
+.footer-row{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#10140b;padding:12px 20px;font-size:12px;font-weight:800;z-index:100;box-shadow:0 8px 30px #0008;max-width:90%;text-align:center}
+@media(max-width:800px){
+ .navlinks{display:none}
+ .hero{min-height:570px}
+ .hero:before{width:100%;right:-15%;opacity:.35}
+ .hero:after{right:-20%;width:220px;height:220px}
+ .plans,.feature-grid{grid-template-columns:1fr 1fr}
+ .plan:last-child{grid-column:auto}
+ .account-grid{grid-template-columns:1fr}
+ .section-head{align-items:start;flex-direction:column}
+}
+@media(max-width:520px){
+ .nav{height:66px}
+ .logo{font-size:17px}
+ .nav>.btn{padding:10px 12px}
+ .hero-content{padding:75px 0}
+ h1{font-size:67px}
+ section{padding:65px 0}
+ .plans,.feature-grid,.join-grid,.contact-grid{grid-template-columns:1fr}
+ .banner{padding:28px;align-items:start;flex-direction:column}
+ .stats .stat{padding:18px 5px}
+ .stat strong{font-size:25px}
+ .stat span{font-size:8px;letter-spacing:.5px}
+ .form-row{grid-template-columns:1fr}
+ .plan{padding:24px}
 }
 </style>
 </head>
-
 <body>
-<div class="wrap">
 
 <header>
-  <a href="#" class="brand" style="text-decoration:none">FITNESS<span>HUB</span></a>
-  <nav class="nav">
-    <button class="btn" id="plansNav">Memberships</button>
-    <button class="btn" id="locationNav">Location</button>
-    <button class="btn" id="accountNav">Login / Join</button>
-    <button class="btn hidden" id="logoutBtn">Sign out</button>
-  </nav>
+  <div class="container nav">
+    <a href="#" class="logo">FITNESS<span>HUB.</span><small>TRAIN BEYOND LIMITS</small></a>
+    <nav class="navlinks">
+      <a href="#plans">Memberships</a>
+      <a href="#benefits">Why Us</a>
+      <a href="#join">How It Works</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#account">JOIN NOW ↗</a>
+  </div>
 </header>
 
-<!-- HERO BANNER -->
+<main>
 <section class="hero">
-  <div class="hero-content">
-    <div class="eyebrow">Your fitness destination</div>
-    <h1>NO EXCUSES.<br><span>JUST RESULTS.</span></h1>
-    <p class="sub">Stronger body. Sharper mind. Better you. Build healthy habits, work towards your goals and become a stronger version of yourself at Fitness Hub.</p>
-    <div class="hero-buttons">
-      <button class="btn primary" id="exploreBtn">Explore Memberships ↗</button>
-      <button class="btn" id="heroJoinBtn">Join Fitness Hub</button>
+  <div class="container">
+    <div class="hero-content">
+      <div class="eyebrow">YOUR NEXT LEVEL STARTS HERE</div>
+      <h1>BUILT BY<br>DISCIPLINE.<br><span>DEFINED BY YOU.</span></h1>
+      <p>Your goals deserve more than a routine. Find your strength, build consistency, and become part of the Fitness Hub community.</p>
+      <div class="hero-actions">
+        <a href="#plans" class="btn btn-primary">EXPLORE MEMBERSHIPS ↗</a>
+        <a href="#benefits" class="btn btn-outline">DISCOVER FITNESS HUB</a>
+      </div>
+      <div class="hero-note">
+        <span>Flexible Memberships</span>
+        <span>Supportive Community</span>
+        <span>Your Fitness Journey</span>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div><strong>03</strong><span>Membership Plans</span></div>
-      <div><strong>365</strong><span>Days to Grow</span></div>
-      <div><strong>100%</strong><span>Focus on Progress</span></div>
+  </div>
+</section>
+
+<div class="container stats">
+  <div class="stat"><strong>01</strong><span>Set Your Goal</span></div>
+  <div class="stat"><strong>02</strong><span>Choose Your Plan</span></div>
+  <div class="stat"><strong>03</strong><span>Start Your Journey</span></div>
+</div>
+
+<section id="plans">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">INVEST IN YOURSELF</div>
+        <h2>CHOOSE YOUR <span class="green">PLAN.</span></h2>
+      </div>
+      <p>Choose a membership that fits your routine. Submit your request online and the gym team will verify your payment before activating your membership.</p>
+    </div>
+
+    <div class="plans">
+      <article class="plan">
+        <div class="plan-tag">FLEXIBLE START</div>
+        <h3>MONTHLY</h3>
+        <p class="plan-desc">A month at a time. Build your routine.</p>
+        <div class="price">₹999 <small>/ 30 days</small></div>
+        <ul>
+          <li>30-day membership</li>
+          <li>Gym access during operating hours</li>
+          <li>Member account dashboard</li>
+          <li>Membership status tracking</li>
+        </ul>
+        <button class="btn btn-outline" onclick="selectPlan('monthly')">SELECT MONTHLY →</button>
+      </article>
+
+      <article class="plan featured">
+        <div class="plan-tag">★ POPULAR CHOICE</div>
+        <h3>QUARTERLY</h3>
+        <p class="plan-desc">Give your fitness goals more time.</p>
+        <div class="price">₹2,499 <small>/ 90 days</small></div>
+        <ul>
+          <li>90-day membership</li>
+          <li>Gym access during operating hours</li>
+          <li>Member account dashboard</li>
+          <li>Membership status tracking</li>
+        </ul>
+        <button class="btn btn-primary" onclick="selectPlan('quarterly')">SELECT QUARTERLY →</button>
+      </article>
+
+      <article class="plan">
+        <div class="plan-tag">LONG-TERM COMMITMENT</div>
+        <h3>YEARLY</h3>
+        <p class="plan-desc">Make fitness part of your lifestyle.</p>
+        <div class="price">₹7,999 <small>/ 365 days</small></div>
+        <ul>
+          <li>365-day membership</li>
+          <li>Gym access during operating hours</li>
+          <li>Member account dashboard</li>
+          <li>Membership status tracking</li>
+        </ul>
+        <button class="btn btn-outline" onclick="selectPlan('yearly')">SELECT YEARLY →</button>
+      </article>
+    </div>
+    <p class="small-text">Membership benefits and operating hours should be confirmed with the gym. Payment verification is handled by the gym owner.</p>
+  </div>
+</section>
+
+<section class="features" id="benefits">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">MORE THAN A WORKOUT</div>
+        <h2>YOUR GOALS.<br><span class="green">YOUR JOURNEY.</span></h2>
+      </div>
+      <p>A fitness experience built around consistency, progress, and a community that helps you stay motivated.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="feature-icon">↗</div>
+        <h3>YOUR PROGRESS</h3>
+        <p>Stay focused on your goals and make your fitness routine a habit.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">✳</div>
+        <h3>YOUR COMMUNITY</h3>
+        <p>Be part of a welcoming environment where every fitness journey matters.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">◈</div>
+        <h3>YOUR MEMBERSHIP</h3>
+        <p>Choose your plan and track your membership request through your account.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">⌁</div>
+        <h3>TRAIN WITH PURPOSE</h3>
+        <p>Create a routine that works for your lifestyle and fitness goals.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">◎</div>
+        <h3>SIMPLE SIGN-UP</h3>
+        <p>Register online and submit your payment reference for verification.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">✓</div>
+        <h3>MEMBERSHIP TRACKING</h3>
+        <p>Check whether your request is pending, approved, or rejected.</p>
+      </article>
     </div>
   </div>
-  <div class="hero-art" aria-label="Fitness Hub brand banner">
-    <div class="art-circle"></div>
-    <div class="art-label">DISCIPLINE<br>OVER MOTIVATION.</div>
-    <div class="art-number">FH<span>.</span></div>
-    <div class="art-bottom">TRAIN HARD · STAY CONSISTENT</div>
+</section>
+
+<section id="join">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">THREE SIMPLE STEPS</div>
+        <h2>READY. SET. <span class="green">JOIN.</span></h2>
+      </div>
+    </div>
+    <div class="join-grid">
+      <div class="join-step"><strong>01</strong><h3>CREATE YOUR ACCOUNT</h3><p>Sign up using your email address or Google account.</p></div>
+      <div class="join-step"><strong>02</strong><h3>CHOOSE YOUR PLAN</h3><p>Select your preferred membership and submit the payment reference.</p></div>
+      <div class="join-step"><strong>03</strong><h3>GET VERIFIED</h3><p>The gym owner reviews your payment and updates your membership status.</p></div>
+    </div>
   </div>
 </section>
 
-<!-- MEMBERSHIPS -->
-<section class="section" id="plans">
-  <div class="eyebrow">Membership options</div>
-  <h2>Choose your plan.</h2>
-  <p class="muted section-intro">Pick the membership that fits your routine. Your membership request will be confirmed after payment verification.</p>
-  <div class="plans" id="plansGrid"></div>
-</section>
-
-<!-- BENEFITS -->
-<section class="section" id="why-us">
-  <div class="eyebrow">More than a workout</div>
-  <h2>Made for your progress.</h2>
-  <p class="muted">Build habits that support your fitness journey, one session at a time.</p>
-  <div class="info-grid">
-    <article class="info-card">
-      <div class="info-icon">⚡</div>
-      <h3>Train with purpose</h3>
-      <p>Show up with a goal and build a consistent training routine.</p>
-    </article>
-    <article class="info-card">
-      <div class="info-icon">🎯</div>
-      <h3>Focus on progress</h3>
-      <p>Keep working towards better strength, stamina and confidence.</p>
-    </article>
-    <article class="info-card">
-      <div class="info-icon">💪</div>
-      <h3>Stay consistent</h3>
-      <p>Make training a habit and celebrate your progress over time.</p>
-    </article>
+<div class="container">
+  <div class="banner">
+    <div><h2>YOUR FUTURE SELF<br>WILL THANK YOU.</h2><p>Take the first step towards your fitness goals today.</p></div>
+    <a href="#account" class="btn">GET STARTED ↗</a>
   </div>
-</section>
+</div>
 
-<!-- JOINING STEPS -->
-<section class="section">
-  <div class="eyebrow">Simple to get started</div>
-  <h2>Your journey starts here.</h2>
-  <div class="info-grid">
-    <article class="info-card">
-      <div class="steps-number">01</div>
-      <h3>Choose a plan</h3>
-      <p>Compare the available memberships and select the one you want.</p>
-    </article>
-    <article class="info-card">
-      <div class="steps-number">02</div>
-      <h3>Submit your request</h3>
-      <p>Create an account and enter your payment reference after paying.</p>
-    </article>
-    <article class="info-card">
-      <div class="steps-number">03</div>
-      <h3>Get verified</h3>
-      <p>The gym checks your payment and updates your membership status.</p>
-    </article>
-  </div>
-</section>
+<section id="account">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">MEMBER ACCESS</div>
+        <h2>YOUR FITNESS <span class="green">ACCOUNT.</span></h2>
+      </div>
+      <p>Sign in to submit a membership request or check the status of your existing request.</p>
+    </div>
 
-<!-- MEMBER LOGIN + REQUESTS -->
-<section class="section" id="account">
-  <div class="eyebrow">Member access</div>
-  <h2>Your Fitness Hub account</h2>
-  <div class="layout">
-    <div class="card">
-      <h3 id="authHeading">Welcome to the club.</h3>
-      <p class="muted" id="authDescription">Sign in or create an account to get started.</p>
-      <div id="authForms">
-        <div class="tabs">
-          <button class="btn primary" id="showLogin" type="button">Sign in</button>
-          <button class="btn" id="showSignup" type="button">Create account</button>
-        </div>
+    <div class="account-grid">
+      <div class="panel" id="authPanel">
+        <h3 id="authTitle">WELCOME TO THE HUB.</h3>
+        <p class="small-text" style="margin:0 0 20px">Sign in or create your member account.</p>
+
         <form id="authForm">
-          <div class="field hidden" id="nameField">
-            <label for="fullName">Full name</label>
-            <input id="fullName" maxlength="80" autocomplete="name" placeholder="Your name">
+          <div class="field" id="nameField">
+            <label for="authName">FULL NAME</label>
+            <input id="authName" autocomplete="name" placeholder="Your full name">
           </div>
           <div class="field">
-            <label for="email">Email address</label>
-            <input id="email" type="email" required autocomplete="email" placeholder="you@example.com">
+            <label for="authEmail">EMAIL ADDRESS</label>
+            <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
           </div>
           <div class="field">
-            <label for="password">Password</label>
-            <input id="password" type="password" minlength="6" required autocomplete="current-password" placeholder="At least 6 characters">
+            <label for="authPassword">PASSWORD</label>
+            <input id="authPassword" type="password" minlength="6" required autocomplete="current-password" placeholder="At least 6 characters">
           </div>
-          <button class="btn primary" id="authSubmit" type="submit" style="width:100%">Sign in</button>
+          <button class="btn btn-primary" id="authSubmit" type="submit" style="width:100%">CREATE ACCOUNT ↗</button>
         </form>
-        <button class="btn" id="googleBtn" type="button" style="width:100%;margin-top:10px">Continue with Google</button>
+        <button class="btn btn-outline" id="googleBtn" style="width:100%;margin-top:10px">CONTINUE WITH GOOGLE</button>
+        <button id="toggleAuth" style="border:0;background:none;color:var(--green);font-size:11px;margin-top:17px">Already registered? Sign in</button>
+        <p class="small-text">By creating an account, you agree to provide accurate membership details.</p>
       </div>
-      <div id="signedInPanel" class="hidden">
-        <p id="signedInText"></p>
-        <p class="muted">You can now submit a membership request.</p>
+
+      <div class="panel">
+        <div id="signedOutMessage">
+          <h3>MEMBER DASHBOARD</h3>
+          <p class="small-text">Your membership requests and status will appear here after you sign in.</p>
+          <div class="status">● Sign in to access your account.</div>
+        </div>
+
+        <div id="memberArea" class="hidden">
+          <h3>YOUR MEMBERSHIP</h3>
+          <div class="status" id="userInfo"></div>
+
+          <form id="membershipForm">
+            <div class="field">
+              <label for="memberName">FULL NAME</label>
+              <input id="memberName" required maxlength="100" placeholder="Your full name">
+            </div>
+            <div class="field">
+              <label for="planSelect">SELECT MEMBERSHIP</label>
+              <select id="planSelect" required>
+                <option value="monthly">Monthly — ₹999 / 30 days</option>
+                <option value="quarterly">Quarterly — ₹2,499 / 90 days</option>
+                <option value="yearly">Yearly — ₹7,999 / 365 days</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="paymentReference">PAYMENT REFERENCE / UTR</label>
+              <input id="paymentReference" required maxlength="120" placeholder="Enter your payment reference">
+            </div>
+            <button class="btn btn-primary" id="membershipSubmit" type="submit" style="width:100%">SUBMIT MEMBERSHIP REQUEST ↗</button>
+            <p class="small-text">Submitting a request does not confirm payment or activate your membership. The gym must verify it first.</p>
+          </form>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:28px">
+            <h3 style="margin:0">MY REQUESTS</h3>
+            <button class="btn btn-outline" id="signOutBtn">SIGN OUT</button>
+          </div>
+          <div id="myRequests"></div>
+        </div>
       </div>
-      <div id="authStatus" class="status" role="status"></div>
     </div>
 
-    <div class="card">
-      <h3>Request a membership</h3>
-      <p class="muted">Sign in first. Enter the reference number from your payment.</p>
-      <form id="membershipForm">
-        <div class="field">
-          <label for="memberName">Full name</label>
-          <input id="memberName" maxlength="80" required placeholder="Your full name">
-        </div>
-        <div class="field">
-          <label for="planSelect">Membership plan</label>
-          <select id="planSelect" required></select>
-        </div>
-        <div class="field">
-          <label for="paymentReference">Payment reference / UTR</label>
-          <input id="paymentReference" maxlength="100" required placeholder="Enter payment reference">
-        </div>
-        <div class="notice">Your request stays pending until the gym verifies the payment. Never enter your UPI PIN, bank password or OTP here.</div>
-        <button class="btn primary" id="requestSubmit" type="submit" style="width:100%;margin-top:14px">Submit membership request</button>
-      </form>
-      <div id="membershipStatus" class="status" role="status"></div>
-      <div id="myRequests"></div>
+    <div class="panel hidden" id="ownerArea" style="margin-top:22px">
+      <h3>OWNER DASHBOARD <span class="green">↗</span></h3>
+      <p class="small-text">Review customer membership requests. Verify each payment independently before approving.</p>
+      <div id="ownerRequests"></div>
     </div>
   </div>
 </section>
 
-<!-- OWNER DASHBOARD -->
-<section class="section hidden" id="ownerSection">
-  <div class="eyebrow">Private management</div>
-  <h2>Owner dashboard</h2>
-  <p class="muted">Verify payments in your bank or UPI account before approving membership requests.</p>
-  <div id="ownerRequests"></div>
-  <div id="ownerStatus" class="status" role="status"></div>
-</section>
-
-<!-- FAQ -->
-<section class="section" id="faq">
-  <div class="eyebrow">Need to know</div>
-  <h2>Frequently asked questions.</h2>
-  <div class="faq-list">
-    <details class="faq-item">
-      <summary>How do I join Fitness Hub?</summary>
-      <p>Choose a plan, create an account, make your payment through the gym's official payment method and submit your reference.</p>
-    </details>
-    <details class="faq-item">
-      <summary>When will my membership activate?</summary>
-      <p>After the gym verifies your payment and approves your request.</p>
-    </details>
-    <details class="faq-item">
-      <summary>How do I check my request?</summary>
-      <p>Sign in with the same account and view the My Requests section.</p>
-    </details>
-    <details class="faq-item">
-      <summary>What if my payment is not confirmed?</summary>
-      <p>Keep your payment reference and contact the gym owner for help.</p>
-    </details>
-  </div>
-</section>
-
-<!-- LOCATION AT THE END -->
-<section class="section" id="location">
-  <div class="eyebrow">Come train with us</div>
-  <h2>Find Fitness Hub.</h2>
-  <p class="muted">Your next workout starts here.</p>
-  <div class="location-card">
-    <div>
-      <div class="eyebrow">Visit our gym</div>
-      <h3>Fitness Hub</h3>
-      <p class="muted">
-        <strong>Address</strong><br>
-        REPLACE WITH YOUR GYM ADDRESS<br>
-        Area, City, PIN code
-      </p>
-      <p class="muted">
-        <strong>Opening hours</strong><br>
-        REPLACE WITH ACTUAL GYM TIMINGS
-      </p>
-      <p class="muted">
-        <strong>Contact</strong><br>
-        REPLACE WITH GYM PHONE NUMBER
-      </p>
-      <a class="btn primary" href="https://www.google.com/maps/search/?api=1&query=Fitness+Hub+Gym" target="_blank" rel="noopener noreferrer">Get Directions ↗</a>
+<section id="faq">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="eyebrow">GOOD TO KNOW</div><h2>FREQUENTLY <span class="green">ASKED.</span></h2></div>
     </div>
-    <div class="map-panel">
-      <div class="pin">📍</div>
-      <h3>Fitness Hub</h3>
-      <p class="muted">Your local fitness destination</p>
-      <p class="muted">Replace the address and map link with your actual location.</p>
+    <div class="faq-list">
+      <details><summary>How do I join Fitness Hub?</summary><p>Create an account, select a membership plan, and submit your payment reference through the membership form.</p></details>
+      <details><summary>When does my membership become active?</summary><p>Your request remains pending until the gym owner verifies the payment and approves it.</p></details>
+      <details><summary>How can I check my membership status?</summary><p>Sign in to your account to see the status of your membership request.</p></details>
+      <details><summary>What if I enter the wrong payment reference?</summary><p>Contact the gym directly for help. Do not submit someone else's payment information.</p></details>
     </div>
   </div>
 </section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="eyebrow">COME TRAIN WITH US</div><h2>LET'S GET <span class="green">MOVING.</span></h2></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>VISIT FITNESS HUB</h3>
+        <p>Come by the gym to learn about our facilities, membership options, and training environment.</p>
+        <p><strong>Address:</strong> Replace with your gym's actual address.</p>
+        <a class="btn btn-outline" id="mapLink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Fitness+Hub+Gym">GET DIRECTIONS ↗</a>
+      </div>
+      <div class="contact-card">
+        <h3>HAVE A QUESTION?</h3>
+        <p>Contact the gym team for membership enquiries, opening hours, or help with your application.</p>
+        <p><strong>Phone:</strong> Add your gym phone number.</p>
+        <p><strong>Hours:</strong> Add your actual gym timings.</p>
+        <a class="btn btn-primary" id="contactBtn" href="#account">MEMBERSHIP ENQUIRY ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 
 <footer>
-  <div class="brand">FITNESS<span>HUB</span></div>
-  <p>Train consistently. Get stronger.</p>
-  <div class="footer-links">
-    <a href="#plans">Memberships</a>
-    <a href="#account">Member Login</a>
-    <a href="#faq">FAQs</a>
-    <a href="#location">Location</a>
+  <div class="container footer-row">
+    <a href="#" class="logo">FITNESS<span>HUB.</span></a>
+    <span>BUILT FOR YOUR NEXT LEVEL.</span>
+    <span>© <span id="year"></span> Fitness Hub. All rights reserved.</span>
   </div>
-  <p>© <span id="year"></span> Fitness Hub.</p>
 </footer>
 
-</div>
+<div id="toast" class="hidden" role="status" aria-live="polite"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
@@ -343,11 +452,11 @@ import {
   signOut, updateProfile
 } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
 import {
-  getFirestore, collection, addDoc, query, where,
-  onSnapshot, doc, updateDoc, serverTimestamp, Timestamp
+  getFirestore, collection, addDoc, query, where, onSnapshot,
+  doc, updateDoc, serverTimestamp, Timestamp
 } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
 
-// Your Firebase project configuration
+// 1. Keep your own Firebase project configuration here.
 const firebaseConfig = {
   apiKey: "AIzaSyBdFgRcWapkJhblF-BGi1Eh_D6hG4wy0Uc",
   authDomain: "fitness-hub-eb4e3.firebaseapp.com",
@@ -358,274 +467,338 @@ const firebaseConfig = {
   measurementId: "G-RB90JEDHX5"
 };
 
-// IMPORTANT: set this to the gym owner's real Firebase sign-in email.
-// The same email must be used in Firestore security rules.
-const OWNER_EMAIL = "owner@example.com";
+// 2. CHANGE THIS to the gym owner's actual login email.
+const OWNER_EMAIL = "owner@example.com".toLowerCase();
 
-const plans = [
-  {id:"monthly",name:"Monthly",price:999,days:30,label:"Flexible start",
-   features:["30-day membership","Access during gym hours","Great for getting started"]},
-  {id:"quarterly",name:"Quarterly",price:2499,days:90,label:"Most popular",featured:true,
-   features:["90-day membership","Better long-term value","Build a consistent routine"]},
-  {id:"yearly",name:"Yearly",price:7999,days:365,label:"Best commitment",
-   features:["365-day membership","Long-term fitness journey","One simple annual plan"]}
-];
+// Optional: customize these with the real gym details.
+const GYM_ADDRESS = "";
+const GYM_PHONE = "";
+const GYM_WHATSAPP = "";
 
-const $ = id => document.getElementById(id);
-const money = n => "₹" + Number(n).toLocaleString("en-IN");
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, ch => ({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-})[ch]);
+const plans = {
+  monthly: { name: "Monthly", amount: 999, days: 30 },
+  quarterly: { name: "Quarterly", amount: 2499, days: 90 },
+  yearly: { name: "Yearly", amount: 7999, days: 365 }
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-let currentUser = null;
-let authMode = "login";
+let isSignUp = true;
 let stopMyRequests = null;
 let stopOwnerRequests = null;
+let toastTimer;
+
+const $ = id => document.getElementById(id);
+
+function toast(message) {
+  $("toast").textContent = message;
+  $("toast").classList.remove("hidden");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 4000);
+}
+
+function safeText(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[char]));
+}
+
+function dateText(value) {
+  if (!value) return "Not available";
+  const date = value.toDate ? value.toDate() : new Date(value);
+  return Number.isNaN(date.getTime()) ? "Not available" : date.toLocaleDateString();
+}
+
+function money(value) {
+  return "₹" + Number(value).toLocaleString("en-IN");
+}
+
+function requestCard(item, ownerMode = false) {
+  const data = item.data;
+  const status = String(data.status || "pending").toUpperCase();
+  const expiry = data.expiresAt ? dateText(data.expiresAt) : "Not active yet";
+
+  return `
+    <article class="request">
+      <h4>${safeText(data.planName)} — ${money(data.amount)}</h4>
+      <p>Name: ${safeText(data.customerName)}</p>
+      <p>Email: ${safeText(data.email)}</p>
+      ${ownerMode ? `<p>User ID: ${safeText(data.userId)}</p>` : ""}
+      <p>Payment reference: ${safeText(data.paymentReference)}</p>
+      <p>Submitted: ${safeText(dateText(data.createdAt))}</p>
+      <p>Membership expiry: ${safeText(expiry)}</p>
+      <span class="pill">${safeText(status)}</span>
+      ${ownerMode && data.status === "pending" ? `
+        <div class="request-actions">
+          <button class="btn btn-primary" data-action="approve" data-id="${safeText(item.id)}">APPROVE</button>
+          <button class="btn btn-outline" data-action="reject" data-id="${safeText(item.id)}">REJECT</button>
+        </div>` : ""}
+    </article>`;
+}
+
+function selectPlan(planId) {
+  if (!plans[planId]) return;
+  $("planSelect").value = planId;
+  $("account").scrollIntoView({ behavior: "smooth" });
+  if (!auth.currentUser) {
+    toast("Sign in or create an account to request this plan.");
+  }
+}
+window.selectPlan = selectPlan;
+
+function setAuthMode(signUp) {
+  isSignUp = signUp;
+  $("authTitle").textContent = signUp ? "WELCOME TO THE HUB." : "WELCOME BACK.";
+  $("nameField").classList.toggle("hidden", !signUp);
+  $("authName").required = signUp;
+  $("authSubmit").textContent = signUp ? "CREATE ACCOUNT ↗" : "SIGN IN ↗";
+  $("toggleAuth").textContent = signUp
+    ? "Already registered? Sign in"
+    : "New here? Create an account";
+  $("authPassword").autocomplete = signUp ? "new-password" : "current-password";
+}
+
+$("toggleAuth").addEventListener("click", () => setAuthMode(!isSignUp));
+
+$("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const email = $("authEmail").value.trim();
+  const password = $("authPassword").value;
+  const name = $("authName").value.trim();
+  const button = $("authSubmit");
+  button.disabled = true;
+
+  try {
+    if (isSignUp) {
+      const credential = await createUserWithEmailAndPassword(auth, email, password);
+      if (name) await updateProfile(credential.user, { displayName: name });
+      toast("Account created successfully.");
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast("Signed in successfully.");
+    }
+  } catch (error) {
+    toast(error.message || "Could not complete authentication.");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$("googleBtn").addEventListener("click", async () => {
+  try {
+    await signInWithPopup(auth, googleProvider);
+    toast("Google sign-in successful.");
+  } catch (error) {
+    toast(error.message || "Google sign-in failed.");
+  }
+});
+
+$("signOutBtn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    toast("You have signed out.");
+  } catch (error) {
+    toast(error.message || "Sign-out failed.");
+  }
+});
+
+$("membershipForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const user = auth.currentUser;
+  if (!user) return toast("Please sign in first.");
+
+  const name = $("memberName").value.trim();
+  const planId = $("planSelect").value;
+  const paymentReference = $("paymentReference").value.trim();
+  const plan = plans[planId];
+
+  if (!plan || !name || !paymentReference) {
+    return toast("Please complete all membership fields.");
+  }
+
+  const button = $("membershipSubmit");
+  button.disabled = true;
+
+  try {
+    await addDoc(collection(db, "memberships"), {
+      userId: user.uid,
+      email: user.email,
+      customerName: name,
+      planId,
+      planName: plan.name,
+      amount: plan.amount,
+      durationDays: plan.days,
+      paymentReference,
+      status: "pending",
+      createdAt: serverTimestamp()
+    });
+
+    $("paymentReference").value = "";
+    toast("Request submitted. It is pending payment verification.");
+  } catch (error) {
+    console.error(error);
+    toast("Request failed. Check Firestore security rules and your connection.");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+function stopListeners() {
+  if (stopMyRequests) stopMyRequests();
+  if (stopOwnerRequests) stopOwnerRequests();
+  stopMyRequests = null;
+  stopOwnerRequests = null;
+}
+
+function startMemberRequests(user) {
+  const q = query(
+    collection(db, "memberships"),
+    where("userId", "==", user.uid)
+  );
+
+  stopMyRequests = onSnapshot(q, snapshot => {
+    const items = snapshot.docs.map(d => ({ id: d.id, data: d.data() }));
+    items.sort((a, b) => {
+      const ta = a.data.createdAt?.toMillis?.() || 0;
+      const tb = b.data.createdAt?.toMillis?.() || 0;
+      return tb - ta;
+    });
+
+    $("myRequests").innerHTML = items.length
+      ? items.map(item => requestCard(item)).join("")
+      : '<p class="small-text">You have not submitted any membership requests yet.</p>';
+  }, error => {
+    console.error(error);
+    toast("Could not load your requests. Check Firestore rules.");
+  });
+}
+
+function startOwnerRequests() {
+  stopOwnerRequests = onSnapshot(collection(db, "memberships"), snapshot => {
+    const items = snapshot.docs.map(d => ({ id: d.id, data: d.data() }));
+    items.sort((a, b) => {
+      const ta = a.data.createdAt?.toMillis?.() || 0;
+      const tb = b.data.createdAt?.toMillis?.() || 0;
+      return tb - ta;
+    });
+
+    $("ownerRequests").innerHTML = items.length
+      ? items.map(item => requestCard(item, true)).join("")
+      : '<p class="small-text">No membership requests yet.</p>';
+  }, error => {
+    console.error(error);
+    toast("Owner dashboard could not load. Check owner email and Firestore rules.");
+  });
+}
+
+$("ownerRequests").addEventListener("click", async event => {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+
+  const user = auth.currentUser;
+  if (!user || user.email?.toLowerCase() !== OWNER_EMAIL) {
+    return toast("Only the configured owner can perform this action.");
+  }
+
+  const id = button.dataset.id;
+  const action = button.dataset.action;
+  if (!id || !["approve", "reject"].includes(action)) return;
+
+  if (action === "approve" &&
+      !confirm("Confirm that you verified this payment before approving?")) return;
+  if (action === "reject" &&
+      !confirm("Reject this membership request?")) return;
+
+  button.disabled = true;
+  try {
+    const membershipRef = doc(db, "memberships", id);
+
+    if (action === "approve") {
+      // Expiry begins when the owner approves the membership.
+      const snapshotPlan = await new Promise((resolve, reject) => {
+        // The matching request is already visible in the dashboard.
+        // Find the plan duration from the known plan configuration.
+        resolve(null);
+      });
+
+      // The duration is encoded in the matching request card's plan title.
+      // Reloading the document is avoided here; use the displayed plan mapping.
+      const card = button.closest(".request");
+      const planName = card?.querySelector("h4")?.textContent || "";
+      const planId = Object.keys(plans).find(key =>
+        planName.toLowerCase().startsWith(plans[key].name.toLowerCase())
+      );
+      if (!planId) throw new Error("Could not identify the membership plan.");
+
+      const expiryDate = new Date(Date.now() + plans[planId].days * 86400000);
+      await updateDoc(membershipRef, {
+        status: "approved",
+        reviewedAt: serverTimestamp(),
+        approvedAt: serverTimestamp(),
+        expiresAt: Timestamp.fromDate(expiryDate)
+      });
+      toast("Membership approved.");
+    } else {
+      await updateDoc(membershipRef, {
+        status: "rejected",
+        reviewedAt: serverTimestamp(),
+        approvedAt: null,
+        expiresAt: null
+      });
+      toast("Membership rejected.");
+    }
+  } catch (error) {
+    console.error(error);
+    toast(error.message || "Could not update the membership.");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+onAuthStateChanged(auth, user => {
+  stopListeners();
+
+  $("authPanel").classList.toggle("hidden", !!user);
+  $("signedOutMessage").classList.toggle("hidden", !!user);
+  $("memberArea").classList.toggle("hidden", !user);
+  $("ownerArea").classList.add("hidden");
+
+  if (!user) {
+    $("userInfo").textContent = "";
+    $("myRequests").innerHTML = "";
+    return;
+  }
+
+  $("userInfo").textContent = `Signed in as ${user.displayName || user.email} (${user.email})`;
+  $("memberName").value = user.displayName || "";
+  startMemberRequests(user);
+
+  if (user.email?.toLowerCase() === OWNER_EMAIL) {
+    $("ownerArea").classList.remove("hidden");
+    startOwnerRequests();
+  }
+});
 
 $("year").textContent = new Date().getFullYear();
 
-$("plansGrid").innerHTML = plans.map(plan => `
-  <article class="card ${plan.featured ? "featured" : ""}">
-    <div class="tag">${plan.label}</div>
-    <h3>${plan.name}</h3>
-    <div class="price">${money(plan.price)}</div>
-    <div class="muted">${plan.days} days</div>
-    <ul>${plan.features.map(f=>`<li>${f}</li>`).join("")}</ul>
-    <button class="btn ${plan.featured ? "primary" : ""}" data-plan="${plan.id}">Choose ${plan.name}</button>
-  </article>`).join("");
-
-$("planSelect").innerHTML = plans.map(p =>
-  `<option value="${p.id}">${p.name} — ${money(p.price)} (${p.days} days)</option>`
-).join("");
-
-$("plansNav").onclick = () => $("plans").scrollIntoView({behavior:"smooth"});
-$("locationNav").onclick = () => $("location").scrollIntoView({behavior:"smooth"});
-$("accountNav").onclick = () => $("account").scrollIntoView({behavior:"smooth"});
-$("exploreBtn").onclick = () => $("plans").scrollIntoView({behavior:"smooth"});
-$("heroJoinBtn").onclick = () => $("account").scrollIntoView({behavior:"smooth"});
-
-document.querySelectorAll("[data-plan]").forEach(button => {
-  button.onclick = () => {
-    $("planSelect").value = button.dataset.plan;
-    $("account").scrollIntoView({behavior:"smooth"});
-    if (!currentUser) setStatus("authStatus","Sign in or create an account to continue.");
-  };
-});
-
-function setStatus(id,message,error=false) {
-  $(id).textContent = message;
-  $(id).className = "status " + (error ? "error" : "success");
+if (GYM_ADDRESS) {
+  $("mapLink").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(GYM_ADDRESS);
+  $("contact").querySelector(".contact-card p strong").parentElement.textContent = "Address: " + GYM_ADDRESS;
 }
-function friendlyError(error) {
-  const known = {
-    "auth/email-already-in-use":"This email already has an account. Try signing in.",
-    "auth/invalid-credential":"Email or password is incorrect.",
-    "auth/weak-password":"Choose a password with at least 6 characters.",
-    "auth/popup-blocked":"Allow pop-ups for Google sign-in.",
-    "auth/unauthorized-domain":"Add your GitHub Pages hostname in Firebase Authentication → Settings → Authorized domains.",
-    "permission-denied":"Firestore denied this action. Check that you published the correct security rules."
-  };
-  return known[error.code] || error.message || "Something went wrong.";
+if (GYM_PHONE) {
+  const phoneLine = [...$("contact").querySelectorAll(".contact-card p")]
+    .find(p => p.textContent.includes("Phone:"));
+  if (phoneLine) phoneLine.textContent = "Phone: " + GYM_PHONE;
 }
-
-function setAuthMode(mode) {
-  authMode = mode;
-  $("nameField").classList.toggle("hidden",mode!=="signup");
-  $("authSubmit").textContent = mode==="signup" ? "Create account" : "Sign in";
-  $("showLogin").classList.toggle("primary",mode==="login");
-  $("showSignup").classList.toggle("primary",mode==="signup");
-  $("password").autocomplete = mode==="signup" ? "new-password" : "current-password";
-  setStatus("authStatus","");
+if (GYM_WHATSAPP) {
+  $("contactBtn").href = "https://wa.me/" + GYM_WHATSAPP.replace(/\D/g, "");
+  $("contactBtn").textContent = "CHAT ON WHATSAPP ↗";
+  $("contactBtn").target = "_blank";
+  $("contactBtn").rel = "noopener";
 }
-$("showLogin").onclick = () => setAuthMode("login");
-$("showSignup").onclick = () => setAuthMode("signup");
-
-$("authForm").addEventListener("submit",async event => {
-  event.preventDefault();
-  $("authSubmit").disabled = true;
-  try {
-    const email = $("email").value.trim();
-    const password = $("password").value;
-    if (authMode==="signup") {
-      const name = $("fullName").value.trim();
-      if (!name) throw new Error("Please enter your name.");
-      const result = await createUserWithEmailAndPassword(auth,email,password);
-      await updateProfile(result.user,{displayName:name});
-      setStatus("authStatus","Account created successfully.");
-    } else {
-      await signInWithEmailAndPassword(auth,email,password);
-      setStatus("authStatus","Signed in successfully.");
-    }
-  } catch(error) {
-    setStatus("authStatus",friendlyError(error),true);
-  } finally {
-    $("authSubmit").disabled = false;
-  }
-});
-
-$("googleBtn").onclick = async () => {
-  try {
-    await signInWithPopup(auth,googleProvider);
-    setStatus("authStatus","Signed in with Google.");
-  } catch(error) {
-    setStatus("authStatus",friendlyError(error),true);
-  }
-};
-$("logoutBtn").onclick = () => signOut(auth);
-
-$("membershipForm").addEventListener("submit",async event => {
-  event.preventDefault();
-  if (!currentUser) {
-    setStatus("membershipStatus","Please sign in before submitting.",true);
-    return;
-  }
-
-  const plan = plans.find(p=>p.id===$("planSelect").value);
-  const customerName = $("memberName").value.trim();
-  const paymentReference = $("paymentReference").value.trim();
-
-  if (!plan || !customerName || !paymentReference) {
-    setStatus("membershipStatus","Complete every field.",true);
-    return;
-  }
-
-  $("requestSubmit").disabled = true;
-  try {
-    await addDoc(collection(db,"memberships"),{
-      userId:currentUser.uid,
-      email:currentUser.email,
-      customerName,
-      planId:plan.id,
-      planName:plan.name,
-      amount:plan.price,
-      durationDays:plan.days,
-      paymentReference,
-      status:"pending",
-      createdAt:serverTimestamp()
-    });
-    $("paymentReference").value = "";
-    setStatus("membershipStatus","Request submitted! Your membership is pending payment verification.");
-  } catch(error) {
-    setStatus("membershipStatus","Could not submit: "+friendlyError(error),true);
-  } finally {
-    $("requestSubmit").disabled = false;
-  }
-});
-
-function renderRequest(id,data,ownerView=false) {
-  const status = ["pending","approved","rejected"].includes(data.status) ? data.status : "pending";
-  const created = data.createdAt?.toDate ? data.createdAt.toDate().toLocaleString("en-IN") : "Just now";
-  const expiry = data.expiresAt?.toDate ? data.expiresAt.toDate().toLocaleDateString("en-IN") : "";
-  return `<div class="request">
-    <div class="request-top">
-      <strong>${escapeHTML(data.customerName || "Member")}</strong>
-      <span class="pill ${status}">${status}</span>
-    </div>
-    <p class="muted">${escapeHTML(data.planName)} · ${money(data.amount)} · ${Number(data.durationDays)||0} days</p>
-    <p>Email: ${escapeHTML(data.email)}</p>
-    <p>Payment reference: <strong>${escapeHTML(data.paymentReference)}</strong></p>
-    <p class="muted">Submitted: ${escapeHTML(created)}</p>
-    ${expiry ? `<p>Membership expiry: ${escapeHTML(expiry)}</p>` : ""}
-    ${ownerView && status==="pending" ? `<div class="actions">
-      <button class="btn primary" data-approve="${escapeHTML(id)}">Approve payment</button>
-      <button class="btn" data-reject="${escapeHTML(id)}">Reject request</button>
-    </div>` : ""}
-  </div>`;
-}
-
-function listenToMyRequests(user) {
-  if (stopMyRequests) stopMyRequests();
-  $("myRequests").innerHTML = "<h3>My requests</h3><p class='muted'>Loading…</p>";
-  const q = query(collection(db,"memberships"),where("userId","==",user.uid));
-  stopMyRequests = onSnapshot(q,snapshot => {
-    const docs = snapshot.docs.slice().sort((a,b)=>
-      (b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0)
-    );
-    $("myRequests").innerHTML = "<h3>My requests</h3>" +
-      (docs.length ? docs.map(d=>renderRequest(d.id,d.data())).join("") :
-      "<p class='muted'>You have not submitted a request yet.</p>");
-  },error=>setStatus("membershipStatus","Could not load requests: "+friendlyError(error),true));
-}
-
-function listenToOwnerRequests() {
-  if (stopOwnerRequests) stopOwnerRequests();
-  $("ownerRequests").innerHTML = "<p class='muted'>Loading membership requests…</p>";
-  stopOwnerRequests = onSnapshot(collection(db,"memberships"),snapshot => {
-    const docs = snapshot.docs.slice().sort((a,b)=>
-      (b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0)
-    );
-    $("ownerRequests").innerHTML = docs.length
-      ? docs.map(d=>renderRequest(d.id,d.data(),true)).join("")
-      : "<p class='muted'>No membership requests yet.</p>";
-  },error=>setStatus("ownerStatus","Could not load dashboard: "+friendlyError(error),true));
-}
-
-$("ownerRequests").addEventListener("click",async event => {
-  const approveId = event.target.dataset.approve;
-  const rejectId = event.target.dataset.reject;
-  if (!approveId && !rejectId) return;
-  if (!currentUser || currentUser.email?.toLowerCase()!==OWNER_EMAIL.toLowerCase()) {
-    setStatus("ownerStatus","Owner account required.",true);
-    return;
-  }
-
-  const id = approveId || rejectId;
-  const status = approveId ? "approved" : "rejected";
-  const update = {status,reviewedAt:serverTimestamp()};
-
-  if (approveId) {
-    const card = event.target.closest(".request");
-    const summary = card?.querySelector(".muted")?.textContent || "";
-    const match = summary.match(/(\d+)\s*days/);
-    const days = match ? Number(match[1]) : 30;
-    const expiry = new Date();
-    expiry.setDate(expiry.getDate()+days);
-    update.approvedAt = serverTimestamp();
-    update.expiresAt = Timestamp.fromDate(expiry);
-  }
-
-  try {
-    await updateDoc(doc(db,"memberships",id),update);
-    setStatus("ownerStatus","Request "+status+".");
-  } catch(error) {
-    setStatus("ownerStatus","Update failed: "+friendlyError(error),true);
-  }
-});
-
-onAuthStateChanged(auth,user => {
-  currentUser = user;
-  if (stopMyRequests) { stopMyRequests(); stopMyRequests=null; }
-  if (stopOwnerRequests) { stopOwnerRequests(); stopOwnerRequests=null; }
-
-  $("authForms").classList.toggle("hidden",!!user);
-  $("signedInPanel").classList.toggle("hidden",!user);
-  $("logoutBtn").classList.toggle("hidden",!user);
-  $("accountNav").textContent = user ? "My account" : "Login / Join";
-  $("ownerSection").classList.add("hidden");
-  $("myRequests").innerHTML = "";
-
-  if (!user) {
-    $("authHeading").textContent = "Welcome to the club.";
-    $("authDescription").textContent = "Sign in or create an account to get started.";
-    return;
-  }
-
-  $("authHeading").textContent = "You're signed in.";
-  $("authDescription").textContent = "";
-  $("signedInText").textContent = (user.displayName || user.email)+" · "+user.email;
-  $("memberName").value = user.displayName || "";
-  listenToMyRequests(user);
-
-  if (user.email?.toLowerCase()===OWNER_EMAIL.toLowerCase()) {
-    $("ownerSection").classList.remove("hidden");
-    listenToOwnerRequests();
-  }
-});
 </script>
 </body>
 </html>
