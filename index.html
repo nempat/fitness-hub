@@ -257,6 +257,7 @@ h1 .fire{background:linear-gradient(90deg,#ff5a1f,#ffb48f,#ff5a1f);background-si
  .hero:before{font-size:26vw}
 }
 @media(max-width:520px){h1{font-size:62px}.float-card{padding:9px 12px}.float-card strong{font-size:12px}}
+#upiQr:empty{display:none}
 </style>
 </head>
 <body>
@@ -532,18 +533,15 @@ import { getFirestore, doc, getDoc, setDoc, getDocs, collection, query, where, w
   from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 /* ====== 1. PASTE YOUR FIREBASE CONFIG (Project settings → Your apps → Web) ====== */
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBdFgRcWapkJhblF-BGi1Eh_D6hG4wy0Uc",
-  authDomain: "fitness-hub-eb4e3.firebaseapp.com",
-  projectId: "fitness-hub-eb4e3",
-  storageBucket: "fitness-hub-eb4e3.firebasestorage.app",
-  messagingSenderId: "663770473151",
-  appId: "1:663770473151:web:77d7de3d5e35974ba21c0a",
-  measurementId: "G-RB90JEDHX5"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  appId: "YOUR_APP_ID"
 };
 /* ====== 2. GYM SETTINGS (owner email must match firestore.rules) ====== */
 const OWNER_EMAIL = "lokeshraja001100@gmail.com";
+const isOwnerEmail = e => (e || "").toLowerCase() === OWNER_EMAIL.toLowerCase();
 const UPI_ID = "tharuntej@fam";
 const GYM_PHONE = "";   // e.g. "919876543210" (country code, no +) to show a WhatsApp button
 const PLANS = {
@@ -611,7 +609,7 @@ const show = v => {
 function route() {
   if (!authReady) return;
   if (!user) return show('authView');
-  if (user.email === OWNER_EMAIL) { if (!user.emailVerified) return show('verifyView'); show('ownerView'); return loadOwner(); }
+  if (isOwnerEmail(user.email)) { if (!user.emailVerified) return show('verifyView'); show('ownerView'); return loadOwner(); }
   show('memberView'); loadMember();
 }
 
@@ -643,9 +641,9 @@ $('authBtn').onclick = guard(async () => {
 onAuthStateChanged(auth, guard(async u => {
   user = u; authReady = true;
   if (u) {
-    $('whoName').textContent = u.displayName || u.email;
+    $('whoName').textContent = (u.displayName ? u.displayName + ' · ' : '') + u.email;   // shows which account is signed in
     $('navJoin').textContent = 'MY ACCOUNT ↗';
-    if (u.email !== OWNER_EMAIL) {
+    if (!isOwnerEmail(u.email)) {
       try {
         const ref = doc(db, 'users', u.uid);
         if (!(await getDoc(ref)).exists())   // e.g. first Google sign-in
