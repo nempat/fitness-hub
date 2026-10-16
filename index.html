@@ -1,1 +1,85 @@
 
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner() {
+      return signedIn()
+        && request.auth.token.email == "owner@example.com"
+        && request.auth.token.email_verified == true;
+    }
+
+    match /memberships/{membershipId} {
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasAll([
+          'userId', 'email', 'customerName',
+          'planId', 'planName', 'amount',
+          'durationDays', 'paymentReference',
+          'status', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'userId', 'email', 'customerName',
+          'planId', 'planName', 'amount',
+          'durationDays', 'paymentReference',
+          'status', 'createdAt'
+        ])
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.status == 'pending'
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.customerName is string
+        && request.resource.data.customerName.size() > 0
+        && request.resource.data.customerName.size() <= 80
+        && request.resource.data.paymentReference is string
+        && request.resource.data.paymentReference.size() > 0
+        && request.resource.data.paymentReference.size() <= 100
+        && (
+          (
+            request.resource.data.planId == 'monthly'
+            && request.resource.data.planName == 'Monthly'
+            && request.resource.data.amount == 999
+            && request.resource.data.durationDays == 30
+          ) ||
+          (
+            request.resource.data.planId == 'quarterly'
+            && request.resource.data.planName == 'Quarterly'
+            && request.resource.data.amount == 2499
+            && request.resource.data.durationDays == 90
+          ) ||
+          (
+            request.resource.data.planId == 'yearly'
+            && request.resource.data.planName == 'Yearly'
+            && request.resource.data.amount == 7999
+            && request.resource.data.durationDays == 365
+          )
+        );
+
+      allow read: if isOwner()
+        || (signedIn() && resource.data.userId == request.auth.uid);
+
+      allow update: if isOwner()
+        && request.resource.data.diff(resource.data)
+             .affectedKeys()
+             .hasOnly(['status', 'reviewedAt', 'approvedAt', 'expiresAt'])
+        && request.resource.data.status in ['approved', 'rejected']
+        && request.resource.data.reviewedAt == request.time
+        && (
+          (
+            request.resource.data.status == 'approved'
+            && request.resource.data.approvedAt == request.time
+            && request.resource.data.expiresAt is timestamp
+          ) ||
+          request.resource.data.status == 'rejected'
+        );
+
+      allow delete: if isOwner();
+    }
+  }
+}
+
