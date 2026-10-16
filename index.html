@@ -1,62 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080a08">
+<meta name="theme-color" content="#0a0807">
 <title>Fitness Hub | Train Beyond Limits</title>
 <meta name="description" content="Discover your strength at Fitness Hub. Explore membership plans and join our fitness community.">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#080a08;
-  --panel:#111511;
-  --green:#c4ff39;
-  --text:#f5f7f1;
-  --muted:#92998f;
-  --border:#292e27;
-}
+:root{--bg:#0a0807;--panel:#15110f;--green:#ff5a1f;--text:#f8f4f0;--muted:#9a9089;--border:#2e2723;--red:#ff4d6d}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;line-height:1.6}
 a{color:inherit;text-decoration:none}
-button,input,select{font:inherit}
-button{cursor:pointer}
+button,input,select{font:inherit}button{cursor:pointer}
 .container{width:min(1160px,91%);margin:auto}
-header{position:sticky;top:0;z-index:50;background:#080a08ed;backdrop-filter:blur(15px);border-bottom:1px solid var(--border)}
+header{position:sticky;top:0;z-index:50;background:#0a0807ed;backdrop-filter:blur(15px);border-bottom:1px solid var(--border)}
 .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font-size:19px;font-weight:900;letter-spacing:-1px}
-.logo span{color:var(--green)}
+.logo{font-size:19px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--green)}
 .logo small{display:block;color:var(--muted);font-size:9px;letter-spacing:3px;font-weight:700}
-.navlinks{display:flex;align-items:center;gap:27px;font-size:13px;color:#c6cbc2}
+.navlinks{display:flex;align-items:center;gap:27px;font-size:13px;color:#cbc3bd}
 .navlinks a:hover{color:var(--green)}
-.btn{border:0;border-radius:5px;padding:13px 19px;font-weight:800;font-size:12px;letter-spacing:.5px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
-.btn-primary{background:var(--green);color:#10130b}
-.btn-primary:hover{background:#d8ff79;transform:translateY(-2px)}
-.btn-outline{border:1px solid #454b40;background:transparent;color:white}
+.btn{border:0;border-radius:5px;padding:13px 19px;font-weight:800;font-size:12px;letter-spacing:.5px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.2s;text-align:center}
+.btn-primary{background:var(--green);color:#160a04}
+.btn-primary:hover{background:#ff8a5c;transform:translateY(-2px)}
+.btn-outline{border:1px solid #5a4a42;background:transparent;color:#fff}
 .btn-outline:hover{border-color:var(--green);color:var(--green)}
+.btn-red{border:1px solid var(--red);background:transparent;color:var(--red)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.hero{min-height:620px;display:flex;align-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at 80% 45%,#39511d65,transparent 38%),linear-gradient(110deg,#080a08 35%,#111a0d 100%)}
-.hero:before{content:"";position:absolute;right:-5%;top:5%;width:57%;height:90%;background:linear-gradient(0deg,#080a08 0%,transparent 38%),linear-gradient(90deg,#080a08 0%,transparent 45%),url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=85') center/cover;opacity:.65;filter:grayscale(65%)}
-.hero:after{content:"";position:absolute;right:5%;top:14%;width:320px;height:320px;border:1px solid #c4ff392b;border-radius:50%;box-shadow:0 0 0 45px #c4ff3908,0 0 0 90px #c4ff3905;pointer-events:none}
+.hero{min-height:620px;display:flex;align-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at 80% 45%,#ff5a1f30,transparent 38%),linear-gradient(110deg,#0a0807 35%,#1a0f08 100%)}
+.hero:before{content:"";position:absolute;right:-5%;top:5%;width:57%;height:90%;background:linear-gradient(0deg,#0a0807 0%,transparent 38%),linear-gradient(90deg,#0a0807 0%,transparent 45%),url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=85') center/cover;opacity:.65;filter:grayscale(65%)}
+.hero:after{content:"";position:absolute;right:5%;top:14%;width:320px;height:320px;border:1px solid #ff5a1f2b;border-radius:50%;box-shadow:0 0 0 45px #ff5a1f08,0 0 0 90px #ff5a1f05;pointer-events:none}
 .hero-content{position:relative;z-index:2;padding:95px 0;max-width:680px}
 .eyebrow{display:flex;align-items:center;gap:10px;color:var(--green);font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase}
 .eyebrow:before{content:"";width:27px;height:2px;background:var(--green)}
-h1,h2,h3,.display{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;line-height:.98}
+h1,h2,h3,.display{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;line-height:.98}
 h1{font-size:clamp(68px,10vw,120px);font-weight:900;letter-spacing:-2px;margin:24px 0}
 h1 span{color:var(--green)}
-.hero p{max-width:440px;color:#c1c7bb;font-size:15px;margin-bottom:30px}
+.hero p{max-width:440px;color:#c8c0ba;font-size:15px;margin-bottom:30px}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
-.hero-note{margin-top:43px;display:flex;gap:30px;flex-wrap:wrap;color:#c0c7b9;font-size:11px;font-weight:700;letter-spacing:1px}
+.hero-note{margin-top:43px;display:flex;gap:30px;flex-wrap:wrap;color:#c8c0ba;font-size:11px;font-weight:700;letter-spacing:1px}
 .hero-note span:before{content:"✓";color:var(--green);margin-right:8px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border)}
-.stat{padding:25px 12px;text-align:center;border-right:1px solid var(--border)}
-.stat:last-child{border:0}
-.stat strong{display:block;font-family:'Barlow Condensed';font-size:32px;color:var(--green)}
+.stat{padding:25px 12px;text-align:center;border-right:1px solid var(--border)}.stat:last-child{border:0}
+.stat strong{display:block;font-family:'Anton',Impact,sans-serif;font-size:32px;color:var(--green)}
 .stat span{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
 section{padding:90px 0}
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:38px}
@@ -65,122 +53,253 @@ section{padding:90px 0}
 .green{color:var(--green)}
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
 .plan{background:var(--panel);border:1px solid var(--border);padding:29px;position:relative;transition:.25s}
-.plan:hover{transform:translateY(-5px);border-color:#789c36}
-.plan.featured{border-color:var(--green);background:linear-gradient(155deg,#1b2412,#101310 65%)}
+.plan:hover{transform:translateY(-5px);border-color:#c2501c}
+.plan.featured{border-color:var(--green);background:linear-gradient(155deg,#2a150c,#120d0b 65%)}
 .plan-tag{font-size:9px;letter-spacing:2px;font-weight:900;color:var(--green);text-transform:uppercase}
 .plan h3{font-size:30px;margin:17px 0 7px}
 .price{font-size:38px;font-weight:900;letter-spacing:-2px;margin:16px 0 0}
 .price small{font-size:12px;color:var(--muted);letter-spacing:0}
 .plan-desc{font-size:12px;color:var(--muted);padding-bottom:23px;border-bottom:1px solid var(--border)}
-.plan ul{list-style:none;margin:24px 0 28px;display:grid;gap:12px;font-size:12px;color:#d7ddd1}
+.plan ul{list-style:none;margin:24px 0 28px;display:grid;gap:12px;font-size:12px;color:#ddd5cf}
 .plan li:before{content:"✓";color:var(--green);margin-right:10px}
 .plan .btn{width:100%}
-.features{background:#0c0f0b;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.small-text{font-size:11px;color:var(--muted);margin-top:12px}
+.features{background:#0e0b0a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
 .feature{padding:26px;background:var(--panel);border:1px solid var(--border);min-height:175px}
-.feature-icon{font-size:25px;color:var(--green);margin-bottom:16px}
+.feature-icon{font-size:25px;margin-bottom:16px}
 .feature h3{font-size:24px;margin-bottom:9px}
 .feature p{font-size:12px;color:var(--muted)}
 .join-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.join-step{border-top:1px solid #4d593e;padding-top:20px}
-.join-step strong{font-family:'Barlow Condensed';font-size:43px;color:var(--green)}
+.join-step{border-top:1px solid #6b3f2a;padding-top:20px}
+.join-step strong{font-family:'Anton',Impact,sans-serif;font-size:43px;color:var(--green)}
 .join-step h3{font-size:24px;margin:8px 0}
 .join-step p{font-size:12px;color:var(--muted)}
-.banner{background:var(--green);color:#10140b;padding:42px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.banner h2{font-size:clamp(35px,5vw,53px)}
-.banner p{font-size:12px;margin-top:8px}
-.banner .btn{background:#10140b;color:white}
+.banner{background:var(--green);color:#160a04;padding:42px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.banner h2{font-size:clamp(35px,5vw,53px)}.banner p{font-size:12px;margin-top:8px}
+.banner .btn{background:#160a04;color:#fff}
 .faq-list{display:grid;gap:10px;max-width:850px}
 details{background:var(--panel);border:1px solid var(--border);padding:19px 22px}
 summary{cursor:pointer;font-size:13px;font-weight:700}
 details p{font-size:12px;color:var(--muted);padding-top:12px}
-#account{background:#0c0f0b;border-top:1px solid var(--border)}
-.account-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;align-items:start}
-.panel{padding:26px;background:var(--panel);border:1px solid var(--border);min-width:0}
-.panel h3{font-size:27px;margin-bottom:17px}
-.field{display:grid;gap:6px;margin-bottom:13px}
-.field label{font-size:11px;color:#c6cec0;font-weight:700}
-.field input,.field select{width:100%;background:#080a08;border:1px solid #363d31;border-radius:4px;padding:12px;color:white;outline:none}
-.field input:focus,.field select:focus{border-color:var(--green)}
-.field select option{background:#111}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.small-text{font-size:11px;color:var(--muted);margin-top:12px}
-.status{padding:12px;background:#080a08;border:1px solid var(--border);font-size:12px;margin:12px 0;overflow-wrap:anywhere}
-.hidden{display:none!important}
-.request{border:1px solid var(--border);padding:16px;margin-top:12px;background:#0c0f0b}
-.request h4{font-size:13px;margin-bottom:5px}
-.request p{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
-.request-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.request-actions button{padding:8px 10px;font-size:10px}
-.pill{display:inline-block;font-size:9px;text-transform:uppercase;letter-spacing:1px;padding:4px 7px;border:1px solid #566044;color:var(--green);margin-top:7px}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:20px}
 .contact-card{padding:25px;border:1px solid var(--border);background:var(--panel)}
 .contact-card h3{font-size:25px;margin-bottom:8px}
-.contact-card p{color:var(--muted);font-size:12px;margin-bottom:12px}
+.contact-card p{color:var(--muted);font-size:12px;margin-bottom:14px}
+.map{border:1px solid var(--border);min-height:300px;overflow:hidden;background:var(--panel)}
+.map iframe{width:100%;height:100%;min-height:300px;border:0;filter:grayscale(.6) invert(.9) contrast(.9)}
 footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted);font-size:11px}
 .footer-row{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#10140b;padding:12px 20px;font-size:12px;font-weight:800;z-index:100;box-shadow:0 8px 30px #0008;max-width:90%;text-align:center}
+
+
+/* ---- gym-lover polish ---- */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+main,header,footer{position:relative;z-index:1}
+::selection{background:var(--green);color:#160a04}
+.hero .eyebrow:before{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{width:27px;opacity:1}50%{width:45px;opacity:.5}}
+h1{text-shadow:0 0 60px #ff5a1f22}
+h1 span{background:linear-gradient(90deg,#ff5a1f,#ffb48f,#ff5a1f);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.btn-primary{box-shadow:0 8px 30px #ff5a1f30}
+.btn-primary:hover{box-shadow:0 12px 40px #ff5a1f55}
+.hero-badge{position:absolute;right:9%;bottom:12%;z-index:3;width:130px;height:130px;border-radius:50%;background:var(--green);color:#160a04;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Anton',Impact,sans-serif;font-weight:900;font-size:25px;line-height:.95;text-transform:uppercase;transform:rotate(-12deg);box-shadow:0 0 0 8px #ff5a1f22,0 20px 50px #0009;animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:rotate(-12deg) translateY(-12px)}}
+.scroll-cue{position:absolute;left:50%;bottom:18px;z-index:3;transform:translateX(-50%);font-size:9px;letter-spacing:3px;color:var(--muted);font-weight:700;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-cue:after{content:"";width:1px;height:28px;background:linear-gradient(var(--green),transparent);animation:drop 1.6s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.marquee{background:var(--green);color:#160a04;overflow:hidden;border-bottom:1px solid var(--border);transform:skewY(-1deg);margin:-14px 0 14px;position:relative;z-index:4}
+.marquee-track{display:flex;width:max-content;animation:scrollx 28s linear infinite;padding:14px 0}
+.marquee span{font-family:'Anton',Impact,sans-serif;font-weight:900;font-size:26px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;padding:0 22px}
+.marquee span:after{content:"✦";margin-left:44px;opacity:.55}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:260px 260px;gap:14px}
+.tile{position:relative;overflow:hidden;border:1px solid var(--border);background:linear-gradient(135deg,#2a150c,#0e0b0a);display:flex;align-items:flex-end;padding:24px}
+.tile:before{content:"";position:absolute;inset:0;background:var(--img) center/cover;filter:grayscale(1) contrast(1.1);opacity:.55;transition:.6s}
+.tile:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0a0807f2 8%,#0a080700 65%)}
+.tile:hover:before{filter:grayscale(0);opacity:.85;transform:scale(1.06)}
+.tile div{position:relative;z-index:2}
+.tile h3{font-size:clamp(34px,4.5vw,56px);color:#fff}
+.tile h3 span{color:var(--green)}
+.tile p{font-size:12px;color:#c8c0ba;margin-top:6px}
+.tile.t1{grid-row:span 2}.tile.t4{grid-column:span 2}
+.plan.featured{box-shadow:0 0 0 1px #ff5a1f55,0 25px 70px #ff5a1f18;animation:glow 3s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 1px #ff5a1faa,0 25px 90px #ff5a1f35}}
+.plan:before{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:var(--green);transition:.4s}
+.plan:hover:before,.plan.featured:before{width:100%}
+.price{background:linear-gradient(90deg,#fff,#ff5a1f);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.price small{-webkit-text-fill-color:var(--muted)}
+.feature{position:relative;transition:.3s;overflow:hidden}
+.feature:hover{transform:translateY(-6px);border-color:#c2501c;background:linear-gradient(160deg,#2a150c,#15110f)}
+.feature-icon{width:52px;height:52px;border-radius:12px;background:#ff5a1f14;border:1px solid #ff5a1f33;display:flex;align-items:center;justify-content:center}
+.join-step{transition:.3s}.join-step:hover{border-top-color:var(--green)}
+.join-step strong{font-size:64px;line-height:1;opacity:.9;-webkit-text-stroke:1px var(--green);color:transparent}
+.join-step:hover strong{color:var(--green)}
+.banner{background:repeating-linear-gradient(-45deg,#ff5a1f,#ff5a1f 22px,#f04a10 22px,#f04a10 44px);box-shadow:0 30px 80px #ff5a1f22}
+.panel{transition:.25s}.panel:hover{border-color:#5a463b}
+.big{text-shadow:0 0 30px #ff5a1f44}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+.mobile-cta{display:none}
 @media(max-width:800px){
- .navlinks{display:none}
- .hero{min-height:570px}
- .hero:before{width:100%;right:-15%;opacity:.35}
- .hero:after{right:-20%;width:220px;height:220px}
+ .mobile-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 4%;background:#0a0807f2;backdrop-filter:blur(12px);border-top:1px solid var(--border)}
+ .mobile-cta .btn{width:100%;padding:15px}
+ body{padding-bottom:70px}body.in-portal .mobile-cta{display:none}
+ .hero-badge{width:96px;height:96px;font-size:19px;right:6%;bottom:8%}
+ .gallery{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:210px}
+ .tile.t1,.tile.t4{grid-row:auto;grid-column:auto}
+ .marquee span{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+
+/* ---- image additions ---- */
+.plan-img{position:relative;height:140px;margin:-29px -29px 24px;overflow:hidden;background:linear-gradient(135deg,#2a150c,#0e0b0a)}
+.plan-img:before{content:"";position:absolute;inset:0;background:var(--img) center/cover;filter:grayscale(.8) contrast(1.1);opacity:.7;transition:.6s}
+.plan-img:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--panel),transparent 70%)}
+.plan.featured .plan-img:after{background:linear-gradient(0deg,#25120a,transparent 70%)}
+.plan:hover .plan-img:before{filter:grayscale(0);opacity:.95;transform:scale(1.08)}
+.photo-wall{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:12px}
+.gitem{position:relative;overflow:hidden;border:1px solid var(--border);cursor:zoom-in;background:linear-gradient(135deg,#2a150c,#0e0b0a)}
+.gitem:before{content:"";position:absolute;inset:0;background:var(--img) center/cover;filter:grayscale(1) contrast(1.1) brightness(.85);transition:.6s}
+.gitem:after{content:"+";position:absolute;right:12px;bottom:10px;width:30px;height:30px;border-radius:50%;background:var(--green);color:#160a04;font-weight:900;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);transition:.3s}
+.gitem:hover:before{filter:none;transform:scale(1.08)}
+.gitem:hover:after{opacity:1;transform:none}
+.gitem.w2{grid-column:span 2}.gitem.h2{grid-row:span 2}
+#lb{position:fixed;inset:0;z-index:200;background:#000d;display:none;align-items:center;justify-content:center;padding:4vw;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:100%;max-height:90vh;border:1px solid var(--green);box-shadow:0 0 80px #ff5a1f33}
+@media(max-width:800px){.photo-wall{grid-template-columns:1fr 1fr;grid-auto-rows:150px}.gitem.w2{grid-column:span 2}}
+
+/* ---- portal ---- */
+#portal{padding:30px 0 70px;min-height:80vh}
+.ptop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.pgrid{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+.panel{background:var(--panel);border:1px solid var(--border);padding:22px;min-width:0}
+.panel h3{font-size:26px;margin-bottom:14px}
+.full{grid-column:1/-1}
+input{width:100%;background:#0a0807;border:1px solid #4a3c34;border-radius:4px;padding:11px;color:#fff;margin-bottom:10px}
+input:focus{outline:0;border-color:var(--green)}
+.muted{color:var(--muted);font-size:12px}
+.big{font-family:'Anton',Impact,sans-serif;font-size:40px;color:var(--green);font-weight:900;line-height:1.1}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap}
+.row:last-child{border:0}
+.pill{font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border:1px solid #7a4a30;color:var(--green)}
+.pill.pending{color:#ffd24a;border-color:#7a6a2a}.pill.rejected,.pill.expired{color:var(--red);border-color:#7a3a3a}
+.tabs{display:flex;gap:8px;margin-bottom:16px}.tabs .btn{flex:1}
+.auth{max-width:420px;margin:4vh auto 0}
+.pplans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.pplans label{border:1px solid var(--border);padding:12px;text-align:center;cursor:pointer;font-size:12px}
+.pplans input{display:none}
+.pplans label:has(input:checked){border-color:var(--green);background:#2a150c}
+.pplans strong{display:block;font-size:16px}
+.ostats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.hidden{display:none!important}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#160a04;padding:12px 20px;font-size:12px;font-weight:800;z-index:100;box-shadow:0 8px 30px #0008;max-width:90%;text-align:center}
+#toast.err{background:var(--red);color:#fff}
+@media(max-width:800px){
+ .navlinks{display:none}.hero{min-height:570px}
+ .hero:before{width:100%;right:-15%;opacity:.35}.hero:after{right:-20%;width:220px;height:220px}
  .plans,.feature-grid{grid-template-columns:1fr 1fr}
- .plan:last-child{grid-column:auto}
- .account-grid{grid-template-columns:1fr}
  .section-head{align-items:start;flex-direction:column}
+ .contact-grid,.pgrid{grid-template-columns:1fr}
 }
 @media(max-width:520px){
- .nav{height:66px}
- .logo{font-size:17px}
- .nav>.btn{padding:10px 12px}
- .hero-content{padding:75px 0}
- h1{font-size:67px}
- section{padding:65px 0}
- .plans,.feature-grid,.join-grid,.contact-grid{grid-template-columns:1fr}
+ .nav{height:66px}.logo{font-size:17px}.nav>.btn{padding:10px 12px}
+ .hero-content{padding:75px 0}h1{font-size:67px}section{padding:65px 0}
+ .plans,.feature-grid,.join-grid{grid-template-columns:1fr}
  .banner{padding:28px;align-items:start;flex-direction:column}
- .stats .stat{padding:18px 5px}
- .stat strong{font-size:25px}
- .stat span{font-size:8px;letter-spacing:.5px}
- .form-row{grid-template-columns:1fr}
- .plan{padding:24px}
+ .stats .stat{padding:18px 5px}.stat strong{font-size:25px}.stat span{font-size:8px;letter-spacing:.5px}
+ .ostats{grid-template-columns:1fr}
 }
+
+/* ---- theme v2: fire orange + Anton/Poppins ---- */
+h1,h2,h3,.display,.big,.stat strong,.join-step strong,.hero-badge,.marquee span,.tile h3,.logo,.price{font-weight:400!important}
+h1,h2,h3{line-height:1.04;letter-spacing:.5px}
+.logo{font-size:23px;letter-spacing:1px}
+.logo small{font-family:'Poppins',sans-serif;font-weight:700;letter-spacing:3px}
+.section-head h2{font-size:clamp(44px,6vw,72px)}
+.price{font-size:48px;letter-spacing:0}.price small{font-family:'Poppins',sans-serif;font-size:12px}
+.plan h3{font-size:34px}
+.hero{min-height:auto;display:block;overflow:hidden;position:relative;background:radial-gradient(circle at 78% 42%,#ff5a1f36,transparent 46%),radial-gradient(circle at 8% 95%,#ff5a1f1c,transparent 40%),repeating-linear-gradient(115deg,transparent 0 70px,#ffffff06 70px 71px),#0a0807}
+.hero:before{content:"FITNESS HUB";position:absolute;left:-1%;bottom:-5%;right:auto;top:auto;width:auto;height:auto;background:none;opacity:1;filter:none;font-family:'Anton',Impact,sans-serif;font-size:21vw;line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:1px #ffffff0e;pointer-events:none}
+.hero:after{display:none}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;padding:80px 0 110px;position:relative;z-index:2}
+.hero-content{padding:0;max-width:none}
+.live-chip{display:inline-flex;align-items:center;gap:10px;border:1px solid #ff5a1f66;background:#ff5a1f14;color:var(--green);padding:7px 16px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:2.5px}
+.live-chip i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 #ff5a1f99;animation:ping 1.6s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px #ff5a1f00}100%{box-shadow:0 0 0 0 #ff5a1f00}}
+h1{font-size:clamp(58px,8.6vw,112px);letter-spacing:1px;margin:22px 0 24px;text-shadow:none}
+h1 span{background:none;-webkit-text-fill-color:initial;animation:none;color:inherit;display:inline-block}
+h1 .stroke{color:transparent;-webkit-text-stroke:2px #fff}
+h1 .fire{background:linear-gradient(90deg,#ff5a1f,#ffb48f,#ff5a1f);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 4s linear infinite}
+.hero p{font-size:16px;max-width:480px;color:#c8c0ba}
+.hero-visual{position:relative;max-width:430px;width:100%;margin-left:auto}
+.photo-frame{position:relative;aspect-ratio:4/5;--cut:polygon(14% 0,100% 0,100% 86%,86% 100%,0 100%,0 14%)}
+.photo-frame:before{content:"";position:absolute;inset:0;transform:translate(18px,18px);background:var(--green);clip-path:var(--cut)}
+.photo{position:absolute;inset:0;background:var(--img) center/cover,#1a0f08;clip-path:var(--cut);filter:contrast(1.1) saturate(1.15)}
+.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0a0807cc,transparent 55%),linear-gradient(135deg,#ff5a1f33,transparent 50%)}
+.float-card{position:absolute;z-index:3;display:flex;align-items:center;gap:12px;background:#15110fee;border:1px solid var(--border);border-left:3px solid var(--green);padding:12px 18px;backdrop-filter:blur(10px);box-shadow:0 18px 40px #000a}
+.float-card b{font-size:22px}
+.float-card strong{display:block;font-size:13px;line-height:1.2}
+.float-card span{font-size:11px;color:var(--muted)}
+.fc1{left:-52px;top:12%;animation:bob 5s ease-in-out infinite}
+.fc2{left:-26px;bottom:10%;animation:bob 5s ease-in-out -2.5s infinite}
+@keyframes bob{50%{transform:translateY(-12px)}}
+.hero-visual .hero-badge{right:-22px;bottom:-28px;width:118px;height:118px;font-size:23px}
+.scroll-cue{bottom:10px}
+.marquee{margin-top:-30px}
+@media(max-width:900px){
+ .hero-grid{grid-template-columns:1fr;gap:56px;padding:60px 0 100px}
+ .hero-visual{margin:0 auto;max-width:340px}
+ .fc1{left:-12px}.fc2{left:-8px}
+ .hero-visual .hero-badge{right:-8px;width:92px;height:92px;font-size:18px}
+ .hero:before{font-size:26vw}
+}
+@media(max-width:520px){h1{font-size:62px}.float-card{padding:9px 12px}.float-card strong{font-size:12px}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="container nav">
-    <a href="#" class="logo">FITNESS<span>HUB.</span><small>TRAIN BEYOND LIMITS</small></a>
+    <a href="#" class="logo" id="logoLink">FITNESS<span>HUB.</span><small>TRAIN BEYOND LIMITS</small></a>
     <nav class="navlinks">
-      <a href="#plans">Memberships</a>
-      <a href="#benefits">Why Us</a>
-      <a href="#join">How It Works</a>
-      <a href="#contact">Contact</a>
+      <a href="#plans" class="siteLink">Memberships</a>
+      <a href="#benefits" class="siteLink">Why Us</a>
+      <a href="#join" class="siteLink">How It Works</a>
+      <a href="#contact" class="siteLink">Contact</a>
     </nav>
-    <a class="btn btn-primary" href="#account">JOIN NOW ↗</a>
+    <a class="btn btn-primary" href="#account" id="navJoin">JOIN NOW ↗</a>
   </div>
 </header>
 
 <main>
+<!-- ================= PUBLIC SITE ================= -->
+<div id="site">
 <section class="hero">
-  <div class="container">
+  <div class="container hero-grid">
     <div class="hero-content">
-      <div class="eyebrow">YOUR NEXT LEVEL STARTS HERE</div>
-      <h1>BUILT BY<br>DISCIPLINE.<br><span>DEFINED BY YOU.</span></h1>
+      <div class="live-chip"><i></i> MEMBERSHIPS OPEN</div>
+      <h1><span class="solid">BUILT BY</span><br><span class="stroke">DISCIPLINE.</span><br><span class="fire">DEFINED BY YOU.</span></h1>
       <p>Your goals deserve more than a routine. Find your strength, build consistency, and become part of the Fitness Hub community.</p>
       <div class="hero-actions">
         <a href="#plans" class="btn btn-primary">EXPLORE MEMBERSHIPS ↗</a>
-        <a href="#benefits" class="btn btn-outline">DISCOVER FITNESS HUB</a>
+        <a href="#account" class="btn btn-outline">JOIN NOW</a>
       </div>
-      <div class="hero-note">
-        <span>Flexible Memberships</span>
-        <span>Supportive Community</span>
-        <span>Your Fitness Journey</span>
-      </div>
+      <div class="hero-note"><span>Flexible Memberships</span><span>Supportive Community</span><span>Your Fitness Journey</span></div>
+    </div>
+    <div class="hero-visual">
+      <div class="photo-frame"><div class="photo" style="--img:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=85')"></div></div>
+      <div class="float-card fc1"><b>📅</b><div><strong>Daily Check-in</strong><span>Track every visit</span></div></div>
+      <div class="float-card fc2"><b>✅</b><div><strong>Verified Plans</strong><span>Approved by the gym</span></div></div>
+      <div class="hero-badge">No<br>Excuses.</div>
     </div>
   </div>
+  <div class="scroll-cue">SCROLL</div>
 </section>
+
+<div class="marquee" aria-hidden="true"><div class="marquee-track"><span>No Excuses</span><span>Show Up</span><span>Lift Heavy</span><span>Stay Consistent</span><span>Earn It</span><span>Train Beyond Limits</span><span>No Excuses</span><span>Show Up</span><span>Lift Heavy</span><span>Stay Consistent</span><span>Earn It</span><span>Train Beyond Limits</span></div></div>
 
 <div class="container stats">
   <div class="stat"><strong>01</strong><span>Set Your Goal</span></div>
@@ -188,56 +307,50 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted);font
   <div class="stat"><strong>03</strong><span>Start Your Journey</span></div>
 </div>
 
+<section id="mindset" style="padding-bottom:30px">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="eyebrow">THE MINDSET</div><h2>EARN EVERY <span class="green">REP.</span></h2></div>
+      <p>Progress is not given. It is built session by session, by people who keep showing up.</p>
+    </div>
+    <div class="gallery">
+      <div class="tile t1" style="--img:url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=80')"><div><h3>LIFT <span>HEAVY.</span></h3><p>Strength is built one rep at a time.</p></div></div>
+      <div class="tile" style="--img:url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80')"><div><h3>SHOW <span>UP.</span></h3><p>Consistency beats motivation.</p></div></div>
+      <div class="tile" style="--img:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80')"><div><h3>EARN <span>IT.</span></h3><p>Results are never handed over.</p></div></div>
+      <div class="tile t4" style="--img:url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1400&q=80')"><div><h3>NO <span>EXCUSES.</span></h3><p>Your next level starts with today's session.</p></div></div>
+    </div>
+  </div>
+</section>
+
 <section id="plans">
   <div class="container">
     <div class="section-head">
-      <div>
-        <div class="eyebrow">INVEST IN YOURSELF</div>
-        <h2>CHOOSE YOUR <span class="green">PLAN.</span></h2>
-      </div>
+      <div><div class="eyebrow">INVEST IN YOURSELF</div><h2>CHOOSE YOUR <span class="green">PLAN.</span></h2></div>
       <p>Choose a membership that fits your routine. Submit your request online and the gym team will verify your payment before activating your membership.</p>
     </div>
-
     <div class="plans">
       <article class="plan">
-        <div class="plan-tag">FLEXIBLE START</div>
-        <h3>MONTHLY</h3>
+        <div class="plan-img" style="--img:url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=900&q=80')"></div>
+        <div class="plan-tag">FLEXIBLE START</div><h3>MONTHLY</h3>
         <p class="plan-desc">A month at a time. Build your routine.</p>
         <div class="price">₹999 <small>/ 30 days</small></div>
-        <ul>
-          <li>30-day membership</li>
-          <li>Gym access during operating hours</li>
-          <li>Member account dashboard</li>
-          <li>Membership status tracking</li>
-        </ul>
+        <ul><li>30-day membership</li><li>Gym access during operating hours</li><li>Member account dashboard</li><li>Membership status tracking</li></ul>
         <button class="btn btn-outline" onclick="selectPlan('monthly')">SELECT MONTHLY →</button>
       </article>
-
       <article class="plan featured">
-        <div class="plan-tag">★ POPULAR CHOICE</div>
-        <h3>QUARTERLY</h3>
+        <div class="plan-img" style="--img:url('https://images.unsplash.com/photo-1549060279-7e168fcee0c2?auto=format&fit=crop&w=900&q=80')"></div>
+        <div class="plan-tag">★ POPULAR CHOICE</div><h3>QUARTERLY</h3>
         <p class="plan-desc">Give your fitness goals more time.</p>
         <div class="price">₹2,499 <small>/ 90 days</small></div>
-        <ul>
-          <li>90-day membership</li>
-          <li>Gym access during operating hours</li>
-          <li>Member account dashboard</li>
-          <li>Membership status tracking</li>
-        </ul>
+        <ul><li>90-day membership</li><li>Gym access during operating hours</li><li>Member account dashboard</li><li>Membership status tracking</li></ul>
         <button class="btn btn-primary" onclick="selectPlan('quarterly')">SELECT QUARTERLY →</button>
       </article>
-
       <article class="plan">
-        <div class="plan-tag">LONG-TERM COMMITMENT</div>
-        <h3>YEARLY</h3>
+        <div class="plan-img" style="--img:url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=900&q=80')"></div>
+        <div class="plan-tag">LONG-TERM COMMITMENT</div><h3>YEARLY</h3>
         <p class="plan-desc">Make fitness part of your lifestyle.</p>
         <div class="price">₹7,999 <small>/ 365 days</small></div>
-        <ul>
-          <li>365-day membership</li>
-          <li>Gym access during operating hours</li>
-          <li>Member account dashboard</li>
-          <li>Membership status tracking</li>
-        </ul>
+        <ul><li>365-day membership</li><li>Gym access during operating hours</li><li>Member account dashboard</li><li>Membership status tracking</li></ul>
         <button class="btn btn-outline" onclick="selectPlan('yearly')">SELECT YEARLY →</button>
       </article>
     </div>
@@ -248,43 +361,16 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted);font
 <section class="features" id="benefits">
   <div class="container">
     <div class="section-head">
-      <div>
-        <div class="eyebrow">MORE THAN A WORKOUT</div>
-        <h2>YOUR GOALS.<br><span class="green">YOUR JOURNEY.</span></h2>
-      </div>
-      <p>A fitness experience built around consistency, progress, and a community that helps you stay motivated.</p>
+      <div><div class="eyebrow">WHY FITNESS HUB</div><h2>MADE FOR <span class="green">CONSISTENCY.</span></h2></div>
+      <p>Simple tools that keep your membership and your routine organised.</p>
     </div>
     <div class="feature-grid">
-      <article class="feature">
-        <div class="feature-icon">↗</div>
-        <h3>YOUR PROGRESS</h3>
-        <p>Stay focused on your goals and make your fitness routine a habit.</p>
-      </article>
-      <article class="feature">
-        <div class="feature-icon">✳</div>
-        <h3>YOUR COMMUNITY</h3>
-        <p>Be part of a welcoming environment where every fitness journey matters.</p>
-      </article>
-      <article class="feature">
-        <div class="feature-icon">◈</div>
-        <h3>YOUR MEMBERSHIP</h3>
-        <p>Choose your plan and track your membership request through your account.</p>
-      </article>
-      <article class="feature">
-        <div class="feature-icon">⌁</div>
-        <h3>TRAIN WITH PURPOSE</h3>
-        <p>Create a routine that works for your lifestyle and fitness goals.</p>
-      </article>
-      <article class="feature">
-        <div class="feature-icon">◎</div>
-        <h3>SIMPLE SIGN-UP</h3>
-        <p>Register online and submit your payment reference for verification.</p>
-      </article>
-      <article class="feature">
-        <div class="feature-icon">✓</div>
-        <h3>MEMBERSHIP TRACKING</h3>
-        <p>Check whether your request is pending, approved, or rejected.</p>
-      </article>
+      <div class="feature"><div class="feature-icon">📅</div><h3>Attendance Tracking</h3><p>Check in from your phone and see your visit history in your account.</p></div>
+      <div class="feature"><div class="feature-icon">💳</div><h3>Easy UPI Payment</h3><p>Pay by UPI and submit your UTR number in a few taps.</p></div>
+      <div class="feature"><div class="feature-icon">✅</div><h3>Verified Activation</h3><p>Every payment is checked by the gym owner before your plan goes live.</p></div>
+      <div class="feature"><div class="feature-icon">📊</div><h3>Membership Status</h3><p>See your plan, expiry date and payment history at any time.</p></div>
+      <div class="feature"><div class="feature-icon">🔁</div><h3>Simple Renewals</h3><p>Renew before expiry and the new plan stacks on your remaining days.</p></div>
+      <div class="feature"><div class="feature-icon">🤝</div><h3>Supportive Community</h3><p>Train alongside people who are building the same habits as you.</p></div>
     </div>
   </div>
 </section>
@@ -292,513 +378,359 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted);font
 <section id="join">
   <div class="container">
     <div class="section-head">
-      <div>
-        <div class="eyebrow">THREE SIMPLE STEPS</div>
-        <h2>READY. SET. <span class="green">JOIN.</span></h2>
-      </div>
+      <div><div class="eyebrow">GETTING STARTED</div><h2>HOW IT <span class="green">WORKS.</span></h2></div>
     </div>
     <div class="join-grid">
-      <div class="join-step"><strong>01</strong><h3>CREATE YOUR ACCOUNT</h3><p>Sign up using your email address or Google account.</p></div>
-      <div class="join-step"><strong>02</strong><h3>CHOOSE YOUR PLAN</h3><p>Select your preferred membership and submit the payment reference.</p></div>
-      <div class="join-step"><strong>03</strong><h3>GET VERIFIED</h3><p>The gym owner reviews your payment and updates your membership status.</p></div>
+      <div class="join-step"><strong>01</strong><h3>Create an account</h3><p>Sign up with email or Google and pick a membership plan.</p></div>
+      <div class="join-step"><strong>02</strong><h3>Pay &amp; submit UTR</h3><p>Pay by UPI, then enter the 12-digit UTR from your payment app.</p></div>
+      <div class="join-step"><strong>03</strong><h3>Get approved</h3><p>The owner verifies your payment and your membership activates.</p></div>
     </div>
   </div>
 </section>
 
-<div class="container">
+<section id="gallery" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="eyebrow">GALLERY</div><h2>SEE THE <span class="green">ENERGY.</span></h2></div>
+      <p>Tap any photo to view it full size.</p>
+    </div>
+    <div class="photo-wall">
+      <div class="gitem w2 h2" data-full="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80" style="--img:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="gitem " data-full="https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=1600&q=80" style="--img:url('https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="gitem " data-full="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=1600&q=80" style="--img:url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="gitem w2" data-full="https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=1600&q=80" style="--img:url('https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="gitem " data-full="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80" style="--img:url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="gitem " data-full="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&q=80" style="--img:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="gitem w2" data-full="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1600&q=80" style="--img:url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=80')"></div>
+    </div>
+  </div>
+</section>
+
+<div class="container" style="margin-bottom:90px">
   <div class="banner">
-    <div><h2>YOUR FUTURE SELF<br>WILL THANK YOU.</h2><p>Take the first step towards your fitness goals today.</p></div>
-    <a href="#account" class="btn">GET STARTED ↗</a>
+    <div><h2>READY TO START?</h2><p>Create your account and choose a plan today.</p></div>
+    <a href="#account" class="btn">JOIN NOW ↗</a>
   </div>
 </div>
 
-<section id="account">
+<section style="padding-top:0">
   <div class="container">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow">MEMBER ACCESS</div>
-        <h2>YOUR FITNESS <span class="green">ACCOUNT.</span></h2>
-      </div>
-      <p>Sign in to submit a membership request or check the status of your existing request.</p>
-    </div>
-
-    <div class="account-grid">
-      <div class="panel" id="authPanel">
-        <h3 id="authTitle">WELCOME TO THE HUB.</h3>
-        <p class="small-text" style="margin:0 0 20px">Sign in or create your member account.</p>
-
-        <form id="authForm">
-          <div class="field" id="nameField">
-            <label for="authName">FULL NAME</label>
-            <input id="authName" autocomplete="name" placeholder="Your full name">
-          </div>
-          <div class="field">
-            <label for="authEmail">EMAIL ADDRESS</label>
-            <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
-          </div>
-          <div class="field">
-            <label for="authPassword">PASSWORD</label>
-            <input id="authPassword" type="password" minlength="6" required autocomplete="current-password" placeholder="At least 6 characters">
-          </div>
-          <button class="btn btn-primary" id="authSubmit" type="submit" style="width:100%">CREATE ACCOUNT ↗</button>
-        </form>
-        <button class="btn btn-outline" id="googleBtn" style="width:100%;margin-top:10px">CONTINUE WITH GOOGLE</button>
-        <button id="toggleAuth" style="border:0;background:none;color:var(--green);font-size:11px;margin-top:17px">Already registered? Sign in</button>
-        <p class="small-text">By creating an account, you agree to provide accurate membership details.</p>
-      </div>
-
-      <div class="panel">
-        <div id="signedOutMessage">
-          <h3>MEMBER DASHBOARD</h3>
-          <p class="small-text">Your membership requests and status will appear here after you sign in.</p>
-          <div class="status">● Sign in to access your account.</div>
-        </div>
-
-        <div id="memberArea" class="hidden">
-          <h3>YOUR MEMBERSHIP</h3>
-          <div class="status" id="userInfo"></div>
-
-          <form id="membershipForm">
-            <div class="field">
-              <label for="memberName">FULL NAME</label>
-              <input id="memberName" required maxlength="100" placeholder="Your full name">
-            </div>
-            <div class="field">
-              <label for="planSelect">SELECT MEMBERSHIP</label>
-              <select id="planSelect" required>
-                <option value="monthly">Monthly — ₹999 / 30 days</option>
-                <option value="quarterly">Quarterly — ₹2,499 / 90 days</option>
-                <option value="yearly">Yearly — ₹7,999 / 365 days</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="paymentReference">PAYMENT REFERENCE / UTR</label>
-              <input id="paymentReference" required maxlength="120" placeholder="Enter your payment reference">
-            </div>
-            <button class="btn btn-primary" id="membershipSubmit" type="submit" style="width:100%">SUBMIT MEMBERSHIP REQUEST ↗</button>
-            <p class="small-text">Submitting a request does not confirm payment or activate your membership. The gym must verify it first.</p>
-          </form>
-
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:28px">
-            <h3 style="margin:0">MY REQUESTS</h3>
-            <button class="btn btn-outline" id="signOutBtn">SIGN OUT</button>
-          </div>
-          <div id="myRequests"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel hidden" id="ownerArea" style="margin-top:22px">
-      <h3>OWNER DASHBOARD <span class="green">↗</span></h3>
-      <p class="small-text">Review customer membership requests. Verify each payment independently before approving.</p>
-      <div id="ownerRequests"></div>
-    </div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="container">
-    <div class="section-head">
-      <div><div class="eyebrow">GOOD TO KNOW</div><h2>FREQUENTLY <span class="green">ASKED.</span></h2></div>
-    </div>
+    <div class="section-head"><div><div class="eyebrow">QUESTIONS</div><h2>GOOD TO <span class="green">KNOW.</span></h2></div></div>
     <div class="faq-list">
-      <details><summary>How do I join Fitness Hub?</summary><p>Create an account, select a membership plan, and submit your payment reference through the membership form.</p></details>
-      <details><summary>When does my membership become active?</summary><p>Your request remains pending until the gym owner verifies the payment and approves it.</p></details>
-      <details><summary>How can I check my membership status?</summary><p>Sign in to your account to see the status of your membership request.</p></details>
-      <details><summary>What if I enter the wrong payment reference?</summary><p>Contact the gym directly for help. Do not submit someone else's payment information.</p></details>
+      <details><summary>How do I activate my membership?</summary><p>Pay by UPI, submit the 12-digit UTR in your account, and the gym owner will approve it after verifying the payment.</p></details>
+      <details><summary>How long does approval take?</summary><p>Approval is done manually by the gym owner, so it may take some time. Your request shows as pending until then.</p></details>
+      <details><summary>What if my payment is rejected?</summary><p>You will see the reason in your payments list and can submit a new request with the correct UTR.</p></details>
+      <details><summary>Can I renew early?</summary><p>Yes. If you renew while your plan is active, the new plan starts when the current one ends.</p></details>
     </div>
   </div>
 </section>
 
-<section id="contact">
+<section id="contact" class="features">
   <div class="container">
-    <div class="section-head">
-      <div><div class="eyebrow">COME TRAIN WITH US</div><h2>LET'S GET <span class="green">MOVING.</span></h2></div>
-    </div>
+    <div class="section-head"><div><div class="eyebrow">FIND US</div><h2>VISIT THE <span class="green">GYM.</span></h2></div></div>
     <div class="contact-grid">
       <div class="contact-card">
-        <h3>VISIT FITNESS HUB</h3>
-        <p>Come by the gym to learn about our facilities, membership options, and training environment.</p>
-        <p><strong>Address:</strong> Replace with your gym's actual address.</p>
-        <a class="btn btn-outline" id="mapLink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Fitness+Hub+Gym">GET DIRECTIONS ↗</a>
+        <h3>Location</h3>
+        <p>Open the map for directions, current timings and contact details.</p>
+        <a class="btn btn-primary" id="dirBtn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/XdJtVasSWzywkPzo7?g_st=awb">GET DIRECTIONS ↗</a>
+        <a class="btn btn-outline hidden" id="waBtn" target="_blank" rel="noopener" style="margin-top:10px">WHATSAPP US</a>
       </div>
-      <div class="contact-card">
-        <h3>HAVE A QUESTION?</h3>
-        <p>Contact the gym team for membership enquiries, opening hours, or help with your application.</p>
-        <p><strong>Phone:</strong> Add your gym phone number.</p>
-        <p><strong>Hours:</strong> Add your actual gym timings.</p>
-        <a class="btn btn-primary" id="contactBtn" href="#account">MEMBERSHIP ENQUIRY ↗</a>
-      </div>
+      <div class="map"><iframe title="Gym location" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        src="https://maps.google.com/maps?ftid=0x3bcb911ed6ebfb49:0xfe7befdb39eeba39&amp;output=embed"></iframe></div>
     </div>
   </div>
 </section>
+</div>
+
+<!-- ================= MEMBER / OWNER PORTAL ================= -->
+<div id="portal" class="hidden">
+  <div class="container">
+    <div class="ptop">
+      <button class="btn btn-outline" id="backBtn">← BACK TO SITE</button>
+      <div id="who" class="hidden"><span class="muted" id="whoName"></span> <button class="btn btn-outline" id="logoutBtn" style="padding:10px 14px">LOG OUT</button></div>
+    </div>
+
+    <div id="authView" class="panel auth hidden">
+      <div class="tabs"><button class="btn btn-primary" id="tLogin">LOG IN</button><button class="btn btn-outline" id="tReg">SIGN UP</button></div>
+      <div id="regOnly" class="hidden">
+        <input id="aName" placeholder="Full name"><input id="aPhone" placeholder="Phone number" inputmode="tel">
+      </div>
+      <input id="aEmail" type="email" placeholder="Email"><input id="aPass" type="password" placeholder="Password (6+ characters)">
+      <button class="btn btn-primary" style="width:100%" id="authBtn">LOG IN</button>
+      <button class="btn btn-outline" style="width:100%;margin-top:10px" id="googleBtn">CONTINUE WITH GOOGLE</button>
+    </div>
+
+    <div id="verifyView" class="panel auth hidden">
+      <h3>Verify owner email</h3>
+      <p class="muted" style="margin-bottom:14px">Owner access needs a verified email. Easiest: log out and use "Continue with Google". Or send a verification email, click the link, then reload.</p>
+      <button class="btn btn-primary" id="verifyBtn">SEND VERIFICATION EMAIL</button>
+    </div>
+
+    <div id="memberView" class="hidden">
+      <div class="pgrid">
+        <div class="panel">
+          <h3>Membership</h3><div id="mStatus"></div>
+          <button class="btn btn-primary" id="checkBtn" style="margin-top:16px;width:100%">CHECK IN TODAY</button>
+          <p class="muted" style="margin-top:8px" id="checkNote"></p>
+        </div>
+        <div class="panel">
+          <h3>Pay &amp; Activate</h3>
+          <div class="pplans" id="planBox"></div>
+          <div id="upiQr" style="background:#fff;padding:10px;width:fit-content;margin:0 auto 12px"></div>
+          <div id="payInfo" class="muted" style="margin-bottom:10px"></div>
+          <a id="upiLink" class="btn btn-outline hidden" style="display:flex;margin-bottom:10px">PAY WITH UPI APP</a>
+          <input id="utr" placeholder="12-digit UTR / reference number" inputmode="numeric" maxlength="12">
+          <button class="btn btn-primary" style="width:100%" id="utrBtn">SUBMIT FOR APPROVAL</button>
+          <p class="muted" style="margin-top:8px">Your membership activates once the gym owner verifies the UTR.</p>
+        </div>
+        <div class="panel"><h3>My Payments</h3><div id="myPay"></div></div>
+        <div class="panel"><h3>My Attendance</h3><div class="muted" id="attCount"></div><div id="myAtt"></div></div>
+      </div>
+    </div>
+
+    <div id="ownerView" class="hidden">
+      <div class="ostats">
+        <div class="panel"><div class="muted">PENDING APPROVALS</div><div class="big" id="sPend">0</div></div>
+        <div class="panel"><div class="muted">ACTIVE MEMBERS</div><div class="big" id="sAct">0</div></div>
+        <div class="panel"><div class="muted">CHECKED IN TODAY</div><div class="big" id="sToday">0</div></div>
+      </div>
+      <div class="pgrid">
+        <div class="panel full"><h3>Pending UTR Approvals</h3><div id="oPend"></div></div>
+        <div class="panel"><h3>Members</h3><div id="oMem"></div></div>
+        <div class="panel"><h3>Today's Attendance</h3><div id="oToday"></div></div>
+        <div class="panel full"><h3>Recent Decisions</h3><div id="oHist"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
 </main>
 
-<footer>
-  <div class="container footer-row">
-    <a href="#" class="logo">FITNESS<span>HUB.</span></a>
-    <span>BUILT FOR YOUR NEXT LEVEL.</span>
-    <span>© <span id="year"></span> Fitness Hub. All rights reserved.</span>
-  </div>
-</footer>
+<div id="lb"><img alt="Gym photo"></div>
 
-<div id="toast" class="hidden" role="status" aria-live="polite"></div>
+<div class="mobile-cta"><a href="#account" class="btn btn-primary">JOIN NOW ↗</a></div>
 
+<footer><div class="container footer-row"><span>© Fitness Hub. All rights reserved.</span><span>Membership activation is subject to payment verification by the gym.</span></div></footer>
+<div id="toast" class="hidden"></div>
+
+<script>
+document.querySelectorAll('.section-head,.gitem,.plan,.feature,.join-step,.tile,.faq-list details,.contact-card,.map,.banner').forEach((el,i)=>{el.classList.add('reveal');el.style.transitionDelay=(i%3)*90+'ms'});
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>io.observe(el))}
+else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+</script>
+<script>
+(function(){var lb=document.getElementById('lb'),im=lb.querySelector('img');
+document.querySelectorAll('.gitem').forEach(function(g){g.onclick=function(){im.src=g.dataset.full;lb.classList.add('open')}});
+lb.onclick=function(){lb.classList.remove('open')};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open')})})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
-import {
-  getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
-  signOut, updateProfile
-} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
-import {
-  getFirestore, collection, addDoc, query, where, onSnapshot,
-  doc, updateDoc, serverTimestamp, Timestamp
-} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile,
+  GoogleAuthProvider, signInWithPopup, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, getDocs, collection, query, where, writeBatch, serverTimestamp, Timestamp }
+  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-// 1. Keep your own Firebase project configuration here.
+/* ====== 1. PASTE YOUR FIREBASE CONFIG (Project settings → Your apps → Web) ====== */
 const firebaseConfig = {
-  apiKey: "AIzaSyBdFgRcWapkJhblF-BGi1Eh_D6hG4wy0Uc",
-  authDomain: "fitness-hub-eb4e3.firebaseapp.com",
-  projectId: "fitness-hub-eb4e3",
-  storageBucket: "fitness-hub-eb4e3.firebasestorage.app",
-  messagingSenderId: "663770473151",
-  appId: "1:663770473151:web:77d7de3d5e35974ba21c0a",
-  measurementId: "G-RB90JEDHX5"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  appId: "YOUR_APP_ID"
 };
-
-// 2. CHANGE THIS to the gym owner's actual login email.
-const OWNER_EMAIL = "owner@example.com".toLowerCase();
-
-// Optional: customize these with the real gym details.
-const GYM_ADDRESS = "";
-const GYM_PHONE = "";
-const GYM_WHATSAPP = "";
-
-const plans = {
-  monthly: { name: "Monthly", amount: 999, days: 30 },
-  quarterly: { name: "Quarterly", amount: 2499, days: 90 },
-  yearly: { name: "Yearly", amount: 7999, days: 365 }
+/* ====== 2. GYM SETTINGS (owner email must match firestore.rules) ====== */
+const OWNER_EMAIL = "lokeshraja001100@gmail.com";
+const UPI_ID = "tharuntej@fam";
+const GYM_PHONE = "";   // e.g. "919876543210" (country code, no +) to show a WhatsApp button
+const PLANS = {
+  monthly:   { label: "Monthly",   days: 30,  price: 999 },
+  quarterly: { label: "Quarterly", days: 90,  price: 2499 },
+  yearly:    { label: "Yearly",    days: 365, price: 7999 }
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
-
-let isSignUp = true;
-let stopMyRequests = null;
-let stopOwnerRequests = null;
-let toastTimer;
-
+const auth = getAuth(app), db = getFirestore(app);
 const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ms = t => t?.toMillis ? t.toMillis() : 0;
+const fmt = t => new Date(typeof t === 'number' ? t : ms(t)).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+const fmtT = t => new Date(ms(t)).toLocaleString('en-IN', {dateStyle:'medium', timeStyle:'short'});
+const istDay = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
+let mode = 'login', plan = 'quarterly', user = null;
 
-function toast(message) {
-  $("toast").textContent = message;
-  $("toast").classList.remove("hidden");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 4000);
+if (GYM_PHONE) { const w = $('waBtn'); w.href = 'https://wa.me/' + GYM_PHONE; w.classList.remove('hidden'); }
+
+function toast(m, err) {
+  const t = $('toast'); t.textContent = m; t.className = err ? 'err' : '';
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.add('hidden'), 3500);
+}
+const guard = fn => async (...a) => { try { await fn(...a); } catch (e) { console.error(e); toast(e.code === 'permission-denied' ? 'Not allowed (or this UTR was already used)' : (e.message || 'Something went wrong').replace('Firebase: ', ''), true); } };
+
+/* ---------- site <-> portal ---------- */
+function openPortal() {
+  $('site').classList.add('hidden'); $('portal').classList.remove('hidden'); document.body.classList.add('in-portal');
+  if (location.hash !== '#account') history.replaceState(null, '', '#account');
+  window.scrollTo(0, 0); route();
+}
+function closePortal() {
+  $('portal').classList.add('hidden'); $('site').classList.remove('hidden'); document.body.classList.remove('in-portal');
+  if (location.hash === '#account') history.replaceState(null, '', location.pathname);
+}
+window.selectPlan = p => { plan = p; openPortal(); const r = document.querySelector(`input[name=plan][value=${p}]`); if (r) { r.checked = true; payInfo(); } };
+$('navJoin').onclick = e => { e.preventDefault(); openPortal(); };
+document.querySelectorAll('.btn[href="#account"]').forEach(a => a.onclick = e => { e.preventDefault(); openPortal(); });
+$('backBtn').onclick = closePortal;
+$('logoLink').onclick = e => { e.preventDefault(); closePortal(); window.scrollTo(0, 0); };
+document.querySelectorAll('.siteLink').forEach(a => a.addEventListener('click', () => { if (!$('portal').classList.contains('hidden')) closePortal(); }));
+if (location.hash === '#account') openPortal();
+
+const show = v => {
+  ['authView','verifyView','memberView','ownerView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
+  $('who').classList.toggle('hidden', v === 'authView');
+};
+function route() {
+  if (!user) return show('authView');
+  if (user.email === OWNER_EMAIL) { if (!user.emailVerified) return show('verifyView'); show('ownerView'); return loadOwner(); }
+  show('memberView'); loadMember();
 }
 
-function safeText(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
-  }[char]));
+/* ---------- auth ---------- */
+function setMode(m) {
+  mode = m;
+  $('regOnly').classList.toggle('hidden', m !== 'reg');
+  $('tLogin').className = 'btn ' + (m === 'login' ? 'btn-primary' : 'btn-outline');
+  $('tReg').className = 'btn ' + (m === 'reg' ? 'btn-primary' : 'btn-outline');
+  $('authBtn').textContent = m === 'login' ? 'LOG IN' : 'CREATE ACCOUNT';
 }
+$('tLogin').onclick = () => setMode('login');
+$('tReg').onclick = () => setMode('reg');
+$('logoutBtn').onclick = () => signOut(auth);
+$('googleBtn').onclick = guard(() => signInWithPopup(auth, new GoogleAuthProvider()));
+$('verifyBtn').onclick = guard(async () => { await sendEmailVerification(auth.currentUser); toast('Verification email sent'); });
+$('authBtn').onclick = guard(async () => {
+  const email = $('aEmail').value.trim(), pass = $('aPass').value;
+  if (mode === 'reg') {
+    const name = $('aName').value.trim(), phone = $('aPhone').value.trim();
+    if (!name) throw new Error('Enter your name');
+    const c = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(c.user, { displayName: name });
+    await setDoc(doc(db, 'users', c.user.uid), { name, phone, email: c.user.email, createdAt: serverTimestamp() });
+  } else await signInWithEmailAndPassword(auth, email, pass);
+});
 
-function dateText(value) {
-  if (!value) return "Not available";
-  const date = value.toDate ? value.toDate() : new Date(value);
-  return Number.isNaN(date.getTime()) ? "Not available" : date.toLocaleDateString();
-}
-
-function money(value) {
-  return "₹" + Number(value).toLocaleString("en-IN");
-}
-
-function requestCard(item, ownerMode = false) {
-  const data = item.data;
-  const status = String(data.status || "pending").toUpperCase();
-  const expiry = data.expiresAt ? dateText(data.expiresAt) : "Not active yet";
-
-  return `
-    <article class="request">
-      <h4>${safeText(data.planName)} — ${money(data.amount)}</h4>
-      <p>Name: ${safeText(data.customerName)}</p>
-      <p>Email: ${safeText(data.email)}</p>
-      ${ownerMode ? `<p>User ID: ${safeText(data.userId)}</p>` : ""}
-      <p>Payment reference: ${safeText(data.paymentReference)}</p>
-      <p>Submitted: ${safeText(dateText(data.createdAt))}</p>
-      <p>Membership expiry: ${safeText(expiry)}</p>
-      <span class="pill">${safeText(status)}</span>
-      ${ownerMode && data.status === "pending" ? `
-        <div class="request-actions">
-          <button class="btn btn-primary" data-action="approve" data-id="${safeText(item.id)}">APPROVE</button>
-          <button class="btn btn-outline" data-action="reject" data-id="${safeText(item.id)}">REJECT</button>
-        </div>` : ""}
-    </article>`;
-}
-
-function selectPlan(planId) {
-  if (!plans[planId]) return;
-  $("planSelect").value = planId;
-  $("account").scrollIntoView({ behavior: "smooth" });
-  if (!auth.currentUser) {
-    toast("Sign in or create an account to request this plan.");
-  }
-}
-window.selectPlan = selectPlan;
-
-function setAuthMode(signUp) {
-  isSignUp = signUp;
-  $("authTitle").textContent = signUp ? "WELCOME TO THE HUB." : "WELCOME BACK.";
-  $("nameField").classList.toggle("hidden", !signUp);
-  $("authName").required = signUp;
-  $("authSubmit").textContent = signUp ? "CREATE ACCOUNT ↗" : "SIGN IN ↗";
-  $("toggleAuth").textContent = signUp
-    ? "Already registered? Sign in"
-    : "New here? Create an account";
-  $("authPassword").autocomplete = signUp ? "new-password" : "current-password";
-}
-
-$("toggleAuth").addEventListener("click", () => setAuthMode(!isSignUp));
-
-$("authForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  const email = $("authEmail").value.trim();
-  const password = $("authPassword").value;
-  const name = $("authName").value.trim();
-  const button = $("authSubmit");
-  button.disabled = true;
-
-  try {
-    if (isSignUp) {
-      const credential = await createUserWithEmailAndPassword(auth, email, password);
-      if (name) await updateProfile(credential.user, { displayName: name });
-      toast("Account created successfully.");
-    } else {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast("Signed in successfully.");
+onAuthStateChanged(auth, guard(async u => {
+  user = u;
+  if (u) {
+    $('whoName').textContent = u.displayName || u.email;
+    $('navJoin').textContent = 'MY ACCOUNT ↗';
+    if (u.email !== OWNER_EMAIL) {
+      const ref = doc(db, 'users', u.uid);
+      if (!(await getDoc(ref)).exists())   // e.g. first Google sign-in
+        await setDoc(ref, { name: u.displayName || 'Member', phone: '', email: u.email, createdAt: serverTimestamp() });
     }
-  } catch (error) {
-    toast(error.message || "Could not complete authentication.");
-  } finally {
-    button.disabled = false;
-  }
+    if (!$('portal').classList.contains('hidden') || location.hash === '#account') openPortal();
+  } else { $('navJoin').textContent = 'JOIN NOW ↗'; if (!$('portal').classList.contains('hidden')) route(); }
+}));
+
+/* ---------- member ---------- */
+const loadMember = guard(async () => {
+  const uid = auth.currentUser.uid;
+  const [mS, pS, aS] = await Promise.all([
+    getDoc(doc(db, 'memberships', uid)),
+    getDocs(query(collection(db, 'payments'), where('uid', '==', uid))),
+    getDocs(query(collection(db, 'attendance'), where('uid', '==', uid)))
+  ]);
+  const m = mS.exists() ? mS.data() : null;
+  const active = m && ms(m.expires) > Date.now();
+  const att = aS.docs.map(d => d.data()).sort((a, b) => b.day.localeCompare(a.day));
+  const pays = pS.docs.map(d => d.data()).sort((a, b) => ms(b.createdAt) - ms(a.createdAt));
+  const done = att.some(a => a.day === istDay());
+
+  $('mStatus').innerHTML = !m ? '<div class="big">NOT ACTIVE</div><p class="muted">Pick a plan and submit your UTR to get started.</p>'
+    : active ? `<div class="big">${esc(PLANS[m.plan]?.label)} · ACTIVE</div><p class="muted">Valid until ${fmt(m.expires)}</p>`
+    : `<div class="big" style="color:var(--red)">EXPIRED</div><p class="muted">Expired on ${fmt(m.expires)}. Renew below.</p>`;
+  $('checkBtn').disabled = !active || done;
+  $('checkNote').textContent = !active ? 'Check-in unlocks with an active membership.' : done ? "You're checked in for today. 💪" : '';
+
+  $('planBox').innerHTML = Object.entries(PLANS).map(([k, p]) =>
+    `<label><input type="radio" name="plan" value="${k}" ${k === plan ? 'checked' : ''}><strong>${p.label}</strong>₹${p.price.toLocaleString('en-IN')}<br><span class="muted">${p.days} days</span></label>`).join('');
+  document.querySelectorAll('input[name=plan]').forEach(r => r.onchange = () => { plan = r.value; payInfo(); });
+  payInfo();
+
+  $('myPay').innerHTML = pays.map(p => `<div class="row"><div>${esc(PLANS[p.plan]?.label)} · ₹${p.amount}<br><span class="muted">UTR ${esc(p.utr)} · ${fmtT(p.createdAt)}${p.note ? ' · ' + esc(p.note) : ''}</span></div><span class="pill ${p.status}">${p.status}</span></div>`).join('') || '<p class="muted">No payments yet.</p>';
+  $('attCount').textContent = `${att.length} total visit(s)`;
+  $('myAtt').innerHTML = att.slice(0, 15).map(a => `<div class="row"><span>${fmt(new Date(a.day + 'T00:00:00+05:30').getTime())}</span><span class="muted">${fmtT(a.ts)}</span></div>`).join('');
+  loadMember.hasPending = pays.some(p => p.status === 'pending');
 });
-
-$("googleBtn").addEventListener("click", async () => {
-  try {
-    await signInWithPopup(auth, googleProvider);
-    toast("Google sign-in successful.");
-  } catch (error) {
-    toast(error.message || "Google sign-in failed.");
-  }
-});
-
-$("signOutBtn").addEventListener("click", async () => {
-  try {
-    await signOut(auth);
-    toast("You have signed out.");
-  } catch (error) {
-    toast(error.message || "Sign-out failed.");
-  }
-});
-
-$("membershipForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  const user = auth.currentUser;
-  if (!user) return toast("Please sign in first.");
-
-  const name = $("memberName").value.trim();
-  const planId = $("planSelect").value;
-  const paymentReference = $("paymentReference").value.trim();
-  const plan = plans[planId];
-
-  if (!plan || !name || !paymentReference) {
-    return toast("Please complete all membership fields.");
-  }
-
-  const button = $("membershipSubmit");
-  button.disabled = true;
-
-  try {
-    await addDoc(collection(db, "memberships"), {
-      userId: user.uid,
-      email: user.email,
-      customerName: name,
-      planId,
-      planName: plan.name,
-      amount: plan.amount,
-      durationDays: plan.days,
-      paymentReference,
-      status: "pending",
-      createdAt: serverTimestamp()
-    });
-
-    $("paymentReference").value = "";
-    toast("Request submitted. It is pending payment verification.");
-  } catch (error) {
-    console.error(error);
-    toast("Request failed. Check Firestore security rules and your connection.");
-  } finally {
-    button.disabled = false;
-  }
-});
-
-function stopListeners() {
-  if (stopMyRequests) stopMyRequests();
-  if (stopOwnerRequests) stopOwnerRequests();
-  stopMyRequests = null;
-  stopOwnerRequests = null;
+function payInfo() {
+  const p = PLANS[plan];
+  $('payInfo').innerHTML = `Scan the QR with any UPI app, or pay <b>₹${p.price}</b> to UPI ID <b>${esc(UPI_ID)}</b>. Then enter the 12-digit UTR from your payment app.`;
+  const url = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=Fitness%20Hub&am=${p.price}&cu=INR&tn=${encodeURIComponent(p.label + ' membership')}`;
+  const l = $('upiLink'); l.href = url; l.classList.remove('hidden');
+  const q = $('upiQr'); q.innerHTML = '';
+  if (window.QRCode) new QRCode(q, { text: url, width: 170, height: 170 });   // QR carries the exact plan amount
+  else q.classList.add('hidden');
 }
-
-function startMemberRequests(user) {
-  const q = query(
-    collection(db, "memberships"),
-    where("userId", "==", user.uid)
-  );
-
-  stopMyRequests = onSnapshot(q, snapshot => {
-    const items = snapshot.docs.map(d => ({ id: d.id, data: d.data() }));
-    items.sort((a, b) => {
-      const ta = a.data.createdAt?.toMillis?.() || 0;
-      const tb = b.data.createdAt?.toMillis?.() || 0;
-      return tb - ta;
-    });
-
-    $("myRequests").innerHTML = items.length
-      ? items.map(item => requestCard(item)).join("")
-      : '<p class="small-text">You have not submitted any membership requests yet.</p>';
-  }, error => {
-    console.error(error);
-    toast("Could not load your requests. Check Firestore rules.");
+$('utrBtn').onclick = guard(async () => {
+  const utr = $('utr').value.trim(), u = auth.currentUser;
+  if (!/^\d{12}$/.test(utr)) throw new Error('UTR must be exactly 12 digits');
+  if (loadMember.hasPending) throw new Error('You already have a payment awaiting approval');
+  const us = (await getDoc(doc(db, 'users', u.uid))).data() || {};
+  await setDoc(doc(db, 'payments', utr), {
+    uid: u.uid, name: us.name || u.displayName || '', email: u.email, phone: us.phone || '',
+    plan, amount: PLANS[plan].price, utr, status: 'pending', createdAt: serverTimestamp()
   });
-}
-
-function startOwnerRequests() {
-  stopOwnerRequests = onSnapshot(collection(db, "memberships"), snapshot => {
-    const items = snapshot.docs.map(d => ({ id: d.id, data: d.data() }));
-    items.sort((a, b) => {
-      const ta = a.data.createdAt?.toMillis?.() || 0;
-      const tb = b.data.createdAt?.toMillis?.() || 0;
-      return tb - ta;
-    });
-
-    $("ownerRequests").innerHTML = items.length
-      ? items.map(item => requestCard(item, true)).join("")
-      : '<p class="small-text">No membership requests yet.</p>';
-  }, error => {
-    console.error(error);
-    toast("Owner dashboard could not load. Check owner email and Firestore rules.");
-  });
-}
-
-$("ownerRequests").addEventListener("click", async event => {
-  const button = event.target.closest("button[data-action]");
-  if (!button) return;
-
-  const user = auth.currentUser;
-  if (!user || user.email?.toLowerCase() !== OWNER_EMAIL) {
-    return toast("Only the configured owner can perform this action.");
-  }
-
-  const id = button.dataset.id;
-  const action = button.dataset.action;
-  if (!id || !["approve", "reject"].includes(action)) return;
-
-  if (action === "approve" &&
-      !confirm("Confirm that you verified this payment before approving?")) return;
-  if (action === "reject" &&
-      !confirm("Reject this membership request?")) return;
-
-  button.disabled = true;
-  try {
-    const membershipRef = doc(db, "memberships", id);
-
-    if (action === "approve") {
-      // Expiry begins when the owner approves the membership.
-      const snapshotPlan = await new Promise((resolve, reject) => {
-        // The matching request is already visible in the dashboard.
-        // Find the plan duration from the known plan configuration.
-        resolve(null);
-      });
-
-      // The duration is encoded in the matching request card's plan title.
-      // Reloading the document is avoided here; use the displayed plan mapping.
-      const card = button.closest(".request");
-      const planName = card?.querySelector("h4")?.textContent || "";
-      const planId = Object.keys(plans).find(key =>
-        planName.toLowerCase().startsWith(plans[key].name.toLowerCase())
-      );
-      if (!planId) throw new Error("Could not identify the membership plan.");
-
-      const expiryDate = new Date(Date.now() + plans[planId].days * 86400000);
-      await updateDoc(membershipRef, {
-        status: "approved",
-        reviewedAt: serverTimestamp(),
-        approvedAt: serverTimestamp(),
-        expiresAt: Timestamp.fromDate(expiryDate)
-      });
-      toast("Membership approved.");
-    } else {
-      await updateDoc(membershipRef, {
-        status: "rejected",
-        reviewedAt: serverTimestamp(),
-        approvedAt: null,
-        expiresAt: null
-      });
-      toast("Membership rejected.");
-    }
-  } catch (error) {
-    console.error(error);
-    toast(error.message || "Could not update the membership.");
-  } finally {
-    button.disabled = false;
-  }
+  $('utr').value = ''; toast('Submitted! Waiting for owner approval.'); loadMember();
+});
+$('checkBtn').onclick = guard(async () => {
+  const uid = auth.currentUser.uid, day = istDay();
+  await setDoc(doc(db, 'attendance', `${uid}_${day}`), { uid, day, ts: serverTimestamp() });
+  toast('Checked in!'); loadMember();
 });
 
-onAuthStateChanged(auth, user => {
-  stopListeners();
+/* ---------- owner ---------- */
+const loadOwner = guard(async () => {
+  const [pS, uS, mS, aS] = await Promise.all([
+    getDocs(collection(db, 'payments')), getDocs(collection(db, 'users')), getDocs(collection(db, 'memberships')),
+    getDocs(query(collection(db, 'attendance'), where('day', '==', istDay())))
+  ]);
+  const pays = pS.docs.map(d => d.data()).sort((a, b) => ms(b.createdAt) - ms(a.createdAt));
+  const pend = pays.filter(p => p.status === 'pending').reverse();
+  const mem = {}; mS.forEach(d => mem[d.id] = d.data());
+  const users = uS.docs.map(d => ({ id: d.id, ...d.data() }));
+  const nameOf = {}; users.forEach(u => nameOf[u.id] = u.name);
+  const today = aS.docs.map(d => d.data()).sort((a, b) => ms(b.ts) - ms(a.ts));
+  const isAct = u => mem[u.id] && ms(mem[u.id].expires) > Date.now();
 
-  $("authPanel").classList.toggle("hidden", !!user);
-  $("signedOutMessage").classList.toggle("hidden", !!user);
-  $("memberArea").classList.toggle("hidden", !user);
-  $("ownerArea").classList.add("hidden");
-
-  if (!user) {
-    $("userInfo").textContent = "";
-    $("myRequests").innerHTML = "";
-    return;
-  }
-
-  $("userInfo").textContent = `Signed in as ${user.displayName || user.email} (${user.email})`;
-  $("memberName").value = user.displayName || "";
-  startMemberRequests(user);
-
-  if (user.email?.toLowerCase() === OWNER_EMAIL) {
-    $("ownerArea").classList.remove("hidden");
-    startOwnerRequests();
-  }
+  $('sPend').textContent = pend.length;
+  $('sAct').textContent = users.filter(isAct).length;
+  $('sToday').textContent = today.length;
+  $('oPend').innerHTML = pend.map(p => `<div class="row"><div><b>${esc(p.name)}</b> · ${esc(PLANS[p.plan]?.label)} · ₹${p.amount}<br><span class="muted">UTR <b style="color:#fff">${esc(p.utr)}</b> · ${esc(p.email)} · ${esc(p.phone)} · ${fmtT(p.createdAt)}</span></div><div style="display:flex;gap:8px"><button class="btn btn-primary" style="padding:9px 12px" data-a="approve" data-u="${esc(p.utr)}">APPROVE</button><button class="btn btn-red" style="padding:9px 12px" data-a="reject" data-u="${esc(p.utr)}">REJECT</button></div></div>`).join('') || '<p class="muted">Nothing waiting. 🎉</p>';
+  $('oMem').innerHTML = users.map(u => { const m = mem[u.id]; return `<div class="row"><div>${esc(u.name)}<br><span class="muted">${esc(u.email)} ${esc(u.phone)}</span></div><div style="text-align:right"><span class="pill ${m && !isAct(u) ? 'expired' : ''}">${m ? (isAct(u) ? 'active' : 'expired') : 'no plan'}</span>${m ? `<br><span class="muted">${fmt(m.expires)}</span>` : ''}</div></div>`; }).join('') || '<p class="muted">No members yet.</p>';
+  $('oToday').innerHTML = today.map(a => `<div class="row"><span>${esc(nameOf[a.uid] || a.uid)}</span><span class="muted">${fmtT(a.ts)}</span></div>`).join('') || '<p class="muted">No check-ins yet today.</p>';
+  $('oHist').innerHTML = pays.filter(p => p.status !== 'pending').slice(0, 30).map(p => `<div class="row"><span>${esc(p.name)} · ${esc(PLANS[p.plan]?.label)} · ₹${p.amount} · UTR ${esc(p.utr)}</span><span class="pill ${p.status}">${p.status}</span></div>`).join('') || '<p class="muted">No decisions yet.</p>';
+  window._pend = Object.fromEntries(pend.map(p => [p.utr, p]));
 });
-
-$("year").textContent = new Date().getFullYear();
-
-if (GYM_ADDRESS) {
-  $("mapLink").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(GYM_ADDRESS);
-  $("contact").querySelector(".contact-card p strong").parentElement.textContent = "Address: " + GYM_ADDRESS;
-}
-if (GYM_PHONE) {
-  const phoneLine = [...$("contact").querySelectorAll(".contact-card p")]
-    .find(p => p.textContent.includes("Phone:"));
-  if (phoneLine) phoneLine.textContent = "Phone: " + GYM_PHONE;
-}
-if (GYM_WHATSAPP) {
-  $("contactBtn").href = "https://wa.me/" + GYM_WHATSAPP.replace(/\D/g, "");
-  $("contactBtn").textContent = "CHAT ON WHATSAPP ↗";
-  $("contactBtn").target = "_blank";
-  $("contactBtn").rel = "noopener";
-}
+$('oPend').onclick = guard(async e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const p = window._pend[b.dataset.u];
+  if (b.dataset.a === 'approve') {
+    if (!confirm('Confirm you have verified this UTR in your bank/UPI app?')) return;
+    const ref = doc(db, 'memberships', p.uid), cur = await getDoc(ref);
+    const now = Date.now(), curExp = cur.exists() ? ms(cur.data().expires) : 0;
+    const start = Math.max(now, curExp);   // renewals stack on remaining time
+    const batch = writeBatch(db);
+    batch.set(ref, { plan: p.plan, started: curExp > now ? cur.data().started : Timestamp.now(),
+                     expires: Timestamp.fromMillis(start + PLANS[p.plan].days * 864e5) });
+    batch.update(doc(db, 'payments', p.utr), { status: 'approved', decided: serverTimestamp() });
+    await batch.commit(); toast('Membership activated');
+  } else {
+    const note = prompt('Reason (shown to member):', 'Payment not received'); if (note === null) return;
+    await writeBatch(db).update(doc(db, 'payments', p.utr), { status: 'rejected', note, decided: serverTimestamp() }).commit();
+    toast('Payment rejected');
+  }
+  loadOwner();
+});
 </script>
 </body>
 </html>
