@@ -560,7 +560,7 @@ const ms = t => t?.toMillis ? t.toMillis() : 0;
 const fmt = t => new Date(typeof t === 'number' ? t : ms(t)).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
 const fmtT = t => new Date(ms(t)).toLocaleString('en-IN', {dateStyle:'medium', timeStyle:'short'});
 const istDay = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
-let mode = 'login', plan = 'quarterly', user = null;
+let mode = 'login', plan = 'quarterly', user = null, authReady = false;
 
 if (GYM_PHONE) { const w = $('waBtn'); w.href = 'https://wa.me/' + GYM_PHONE; w.classList.remove('hidden'); }
 
@@ -568,7 +568,25 @@ function toast(m, err) {
   const t = $('toast'); t.textContent = m; t.className = err ? 'err' : '';
   clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.add('hidden'), 3500);
 }
-const guard = fn => async (...a) => { try { await fn(...a); } catch (e) { console.error(e); toast(e.code === 'permission-denied' ? 'Not allowed (or this UTR was already used)' : (e.message || 'Something went wrong').replace('Firebase: ', ''), true); } };
+const FIX = {
+  'auth/unauthorized-domain': 'This website domain is not allowed yet. In Firebase → Authentication → Settings → Authorized domains, add nempat.github.io',
+  'auth/operation-not-allowed': 'This sign-in method is off. In Firebase → Authentication → Sign-in method, enable Google and Email/Password',
+  'auth/invalid-api-key': 'Firebase config is wrong. Paste your real firebaseConfig into index.html',
+  'auth/api-key-not-valid': 'Firebase config is wrong. Paste your real firebaseConfig into index.html',
+  'auth/email-already-in-use': 'This email already has an account. Use Log in, or Continue with Google',
+  'auth/invalid-credential': 'Wrong email or password',
+  'auth/wrong-password': 'Wrong email or password',
+  'auth/user-not-found': 'No account with this email. Use Sign up',
+  'auth/weak-password': 'Password must be at least 6 characters',
+  'auth/invalid-email': 'Enter a valid email',
+  'auth/popup-closed-by-user': 'Google sign-in window was closed',
+  'auth/popup-blocked': 'Allow pop-ups for this site and try again',
+  'auth/account-exists-with-different-credential': 'This email is already registered with a password. Log in with email + password instead',
+  'auth/network-request-failed': 'Network error. Check your internet connection',
+  'permission-denied': 'Permission denied. Check that firestore.rules is published and you are signed in with the owner Google account (or this UTR was already used)',
+  'failed-precondition': 'Firestore is not set up. Create the Firestore database in Firebase console'
+};
+const guard = fn => async (...a) => { try { await fn(...a); } catch (e) { console.error(e); toast(FIX[e.code] || (e.message || 'Something went wrong').replace('Firebase: ', '') + (e.code ? ' [' + e.code + ']' : ''), true); } };
 
 /* ---------- site <-> portal ---------- */
 function openPortal() {
@@ -586,13 +604,12 @@ document.querySelectorAll('.btn[href="#account"]').forEach(a => a.onclick = e =>
 $('backBtn').onclick = closePortal;
 $('logoLink').onclick = e => { e.preventDefault(); closePortal(); window.scrollTo(0, 0); };
 document.querySelectorAll('.siteLink').forEach(a => a.addEventListener('click', () => { if (!$('portal').classList.contains('hidden')) closePortal(); }));
-if (location.hash === '#account') openPortal();
-
 const show = v => {
   ['authView','verifyView','memberView','ownerView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
   $('who').classList.toggle('hidden', v === 'authView');
 };
 function route() {
+  if (!authReady) return;
   if (!user) return show('authView');
   if (user.email === OWNER_EMAIL) { if (!user.emailVerified) return show('verifyView'); show('ownerView'); return loadOwner(); }
   show('memberView'); loadMember();
@@ -616,6 +633,7 @@ $('authBtn').onclick = guard(async () => {
   if (mode === 'reg') {
     const name = $('aName').value.trim(), phone = $('aPhone').value.trim();
     if (!name) throw new Error('Enter your name');
+    if (email.toLowerCase() === OWNER_EMAIL) throw new Error('Owner: do not sign up. Tap "Continue with Google" with this email');
     const c = await createUserWithEmailAndPassword(auth, email, pass);
     await updateProfile(c.user, { displayName: name });
     await setDoc(doc(db, 'users', c.user.uid), { name, phone, email: c.user.email, createdAt: serverTimestamp() });
@@ -623,14 +641,16 @@ $('authBtn').onclick = guard(async () => {
 });
 
 onAuthStateChanged(auth, guard(async u => {
-  user = u;
+  user = u; authReady = true;
   if (u) {
     $('whoName').textContent = u.displayName || u.email;
     $('navJoin').textContent = 'MY ACCOUNT ↗';
     if (u.email !== OWNER_EMAIL) {
-      const ref = doc(db, 'users', u.uid);
-      if (!(await getDoc(ref)).exists())   // e.g. first Google sign-in
-        await setDoc(ref, { name: u.displayName || 'Member', phone: '', email: u.email, createdAt: serverTimestamp() });
+      try {
+        const ref = doc(db, 'users', u.uid);
+        if (!(await getDoc(ref)).exists())   // e.g. first Google sign-in
+          await setDoc(ref, { name: u.displayName || 'Member', phone: '', email: u.email, createdAt: serverTimestamp() });
+      } catch (e) { console.error(e); toast(FIX[e.code] || 'Could not load your profile', true); }
     }
     if (!$('portal').classList.contains('hidden') || location.hash === '#account') openPortal();
   } else { $('navJoin').textContent = 'JOIN NOW ↗'; if (!$('portal').classList.contains('hidden')) route(); }
@@ -735,6 +755,9 @@ $('oPend').onclick = guard(async e => {
   }
   loadOwner();
 });
+
+if (location.hash === '#account') openPortal();   // run only after everything above is defined
+setTimeout(() => { if (!authReady) { authReady = true; if (!$('portal').classList.contains('hidden')) route(); } }, 4000);   // never leave the portal blank
 </script>
 </body>
 </html>
