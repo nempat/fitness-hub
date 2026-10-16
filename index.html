@@ -1,85 +1,452 @@
 
-rules_version = '2';
-
-service cloud.firestore {
-  match /databases/{database}/documents {
-
-    function signedIn() {
-      return request.auth != null;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101410">
+  <title>Fitness Hub | Memberships</title>
+  <style>
+    :root {
+      --bg:#101410; --panel:#191f19; --panel2:#222a21;
+      --green:#b9ff66; --text:#f5f7f2; --muted:#a6b0a3;
+      --line:#303a30; --red:#ff7777;
     }
-
-    function isOwner() {
-      return signedIn()
-        && request.auth.token.email == "owner@example.com"
-        && request.auth.token.email_verified == true;
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:Arial,system-ui,sans-serif; }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    .wrap { width:min(1100px,92%); margin:auto; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 0; border-bottom:1px solid var(--line); }
+    .brand { font-size:22px; font-weight:900; letter-spacing:-1px; }
+    .brand span,h1 span { color:var(--green); }
+    .nav { display:flex; flex-wrap:wrap; gap:9px; }
+    .btn { border:1px solid var(--line); border-radius:11px; padding:12px 15px; background:var(--panel2); color:var(--text); font-weight:700; }
+    .btn.primary { background:var(--green); color:#14200d; border-color:var(--green); }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
+    .hero { padding:70px 0 45px; }
+    .eyebrow { color:var(--green); text-transform:uppercase; letter-spacing:3px; font-size:12px; font-weight:800; }
+    h1 { font-size:clamp(42px,7vw,76px); line-height:.98; letter-spacing:-3px; margin:16px 0; }
+    h2 { letter-spacing:-1px; }
+    .sub,.muted { color:var(--muted); line-height:1.7; }
+    .sub { max-width:620px; }
+    .section { padding:25px 0 50px; }
+    .plans { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:22px; }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:19px; padding:23px; min-width:0; }
+    .featured { border-color:var(--green); }
+    .tag { color:var(--green); font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; }
+    .price { font-size:34px; font-weight:900; margin:14px 0 4px; }
+    .card ul { color:var(--muted); padding-left:20px; line-height:2; min-height:95px; }
+    .card .btn { width:100%; }
+    .layout { display:grid; grid-template-columns:.9fr 1.1fr; gap:17px; align-items:start; }
+    .field { display:grid; gap:7px; margin:13px 0; }
+    label { color:var(--muted); font-size:13px; }
+    input,select { width:100%; padding:13px; border-radius:10px; border:1px solid var(--line); background:#111711; color:var(--text); }
+    input:focus,select:focus { outline:1px solid var(--green); }
+    .notice { background:var(--panel2); color:var(--muted); padding:13px; border-radius:11px; font-size:13px; line-height:1.6; }
+    .tabs,.actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .tabs button { flex:1; }
+    .status { font-size:14px; line-height:1.6; overflow-wrap:anywhere; margin-top:12px; }
+    .error { color:var(--red); } .success { color:var(--green); }
+    .hidden { display:none!important; }
+    .request { border:1px solid var(--line); border-radius:13px; padding:15px; margin:12px 0; overflow-wrap:anywhere; }
+    .request-top { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+    .pill { display:inline-block; padding:5px 9px; border-radius:50px; background:var(--panel2); font-size:11px; text-transform:uppercase; font-weight:800; }
+    .pending { color:#ffe08a; } .approved { color:var(--green); } .rejected { color:var(--red); }
+    footer { border-top:1px solid var(--line); padding:25px 0 40px; color:var(--muted); font-size:13px; }
+    @media(max-width:760px) {
+      .plans,.layout { grid-template-columns:1fr; }
+      .hero { padding-top:45px; }
+      h1 { letter-spacing:-2px; }
+      header { align-items:flex-start; flex-direction:column; }
     }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">FITNESS<span>HUB</span></div>
+    <div class="nav">
+      <button class="btn" id="plansNav">Memberships</button>
+      <button class="btn" id="accountNav">Login / Join</button>
+      <button class="btn hidden" id="logoutBtn">Sign out</button>
+    </div>
+  </header>
 
-    match /memberships/{membershipId} {
+  <section class="hero">
+    <div class="eyebrow">Your next level starts here</div>
+    <h1>BUILD YOUR<br><span>STRONGER SELF.</span></h1>
+    <p class="sub">Choose your membership. Show up consistently. Make progress every day. Start your fitness journey with Fitness Hub.</p>
+    <button class="btn primary" id="exploreBtn">Explore memberships ↗</button>
+  </section>
 
-      allow create: if signedIn()
-        && request.resource.data.keys().hasAll([
-          'userId', 'email', 'customerName',
-          'planId', 'planName', 'amount',
-          'durationDays', 'paymentReference',
-          'status', 'createdAt'
-        ])
-        && request.resource.data.keys().hasOnly([
-          'userId', 'email', 'customerName',
-          'planId', 'planName', 'amount',
-          'durationDays', 'paymentReference',
-          'status', 'createdAt'
-        ])
-        && request.resource.data.userId == request.auth.uid
-        && request.resource.data.email == request.auth.token.email
-        && request.resource.data.status == 'pending'
-        && request.resource.data.createdAt == request.time
-        && request.resource.data.customerName is string
-        && request.resource.data.customerName.size() > 0
-        && request.resource.data.customerName.size() <= 80
-        && request.resource.data.paymentReference is string
-        && request.resource.data.paymentReference.size() > 0
-        && request.resource.data.paymentReference.size() <= 100
-        && (
-          (
-            request.resource.data.planId == 'monthly'
-            && request.resource.data.planName == 'Monthly'
-            && request.resource.data.amount == 999
-            && request.resource.data.durationDays == 30
-          ) ||
-          (
-            request.resource.data.planId == 'quarterly'
-            && request.resource.data.planName == 'Quarterly'
-            && request.resource.data.amount == 2499
-            && request.resource.data.durationDays == 90
-          ) ||
-          (
-            request.resource.data.planId == 'yearly'
-            && request.resource.data.planName == 'Yearly'
-            && request.resource.data.amount == 7999
-            && request.resource.data.durationDays == 365
-          )
-        );
+  <section class="section" id="plans">
+    <div class="eyebrow">Membership options</div>
+    <h2>Choose your plan.</h2>
+    <p class="muted">Select a plan and submit your membership request.</p>
+    <div class="plans" id="plansGrid"></div>
+  </section>
 
-      allow read: if isOwner()
-        || (signedIn() && resource.data.userId == request.auth.uid);
+  <section class="section" id="account">
+    <div class="eyebrow">Member access</div>
+    <h2>Your Fitness Hub account</h2>
+    <div class="layout">
+      <div class="card">
+        <h3 id="authHeading">Welcome to the club.</h3>
+        <p class="muted" id="authDescription">Sign in or create an account to get started.</p>
+        <div id="authForms">
+          <div class="tabs">
+            <button class="btn primary" id="showLogin" type="button">Sign in</button>
+            <button class="btn" id="showSignup" type="button">Create account</button>
+          </div>
+          <form id="authForm">
+            <div class="field hidden" id="nameField">
+              <label for="fullName">Full name</label>
+              <input id="fullName" maxlength="80" autocomplete="name" placeholder="Your name">
+            </div>
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" type="email" required autocomplete="email" placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" type="password" minlength="6" required autocomplete="current-password" placeholder="At least 6 characters">
+            </div>
+            <button class="btn primary" id="authSubmit" type="submit" style="width:100%">Sign in</button>
+          </form>
+          <button class="btn" id="googleBtn" type="button" style="width:100%;margin-top:10px">Continue with Google</button>
+        </div>
+        <div id="signedInPanel" class="hidden">
+          <p id="signedInText"></p>
+          <p class="muted">You're ready to request a membership.</p>
+        </div>
+        <div id="authStatus" class="status" role="status"></div>
+      </div>
 
-      allow update: if isOwner()
-        && request.resource.data.diff(resource.data)
-             .affectedKeys()
-             .hasOnly(['status', 'reviewedAt', 'approvedAt', 'expiresAt'])
-        && request.resource.data.status in ['approved', 'rejected']
-        && request.resource.data.reviewedAt == request.time
-        && (
-          (
-            request.resource.data.status == 'approved'
-            && request.resource.data.approvedAt == request.time
-            && request.resource.data.expiresAt is timestamp
-          ) ||
-          request.resource.data.status == 'rejected'
-        );
+      <div class="card">
+        <h3>Request a membership</h3>
+        <p class="muted">Sign in first, then enter the payment reference you received.</p>
+        <form id="membershipForm">
+          <div class="field">
+            <label for="memberName">Full name</label>
+            <input id="memberName" maxlength="80" required placeholder="Your full name">
+          </div>
+          <div class="field">
+            <label for="planSelect">Membership plan</label>
+            <select id="planSelect" required></select>
+          </div>
+          <div class="field">
+            <label for="paymentReference">Payment reference / UTR</label>
+            <input id="paymentReference" maxlength="100" required placeholder="Enter your payment reference">
+          </div>
+          <div class="notice">Your membership remains pending until the gym verifies your payment. Never enter your UPI PIN, bank password or OTP here.</div>
+          <button class="btn primary" id="requestSubmit" type="submit" style="width:100%;margin-top:14px">Submit membership request</button>
+        </form>
+        <div id="membershipStatus" class="status" role="status"></div>
+        <div id="myRequests"></div>
+      </div>
+    </div>
+  </section>
 
-      allow delete: if isOwner();
-    }
+  <section class="section hidden" id="ownerSection">
+    <div class="eyebrow">Management</div>
+    <h2>Owner dashboard</h2>
+    <p class="muted">Check the actual payment in your bank/UPI account before approving.</p>
+    <div id="ownerRequests"></div>
+    <div id="ownerStatus" class="status" role="status"></div>
+  </section>
+
+  <footer>© <span id="year"></span> Fitness Hub. Train consistently. Get stronger.</footer>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+  import {
+    getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
+    signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
+    signOut, updateProfile
+  } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+  import {
+    getFirestore, collection, addDoc, query, where,
+    onSnapshot, doc, updateDoc, serverTimestamp, Timestamp
+  } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+  // Firebase config from your Firebase project settings
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdFgRcWapkJhblF-BGi1Eh_D6hG4wy0Uc",
+    authDomain: "fitness-hub-eb4e3.firebaseapp.com",
+    projectId: "fitness-hub-eb4e3",
+    storageBucket: "fitness-hub-eb4e3.firebasestorage.app",
+    messagingSenderId: "663770473151",
+    appId: "1:663770473151:web:77d7de3d5e35974ba21c0a",
+    measurementId: "G-RB90JEDHX5"
+  };
+
+  // IMPORTANT: replace with the gym owner's actual Firebase sign-in email.
+  const OWNER_EMAIL = "owner@example.com";
+
+  const plans = [
+    { id:"monthly", name:"Monthly", price:999, days:30, label:"Flexible start",
+      features:["30-day membership","Access during gym hours","Great for getting started"] },
+    { id:"quarterly", name:"Quarterly", price:2499, days:90, label:"Most popular",
+      features:["90-day membership","Better long-term value","Build a consistent routine"], featured:true },
+    { id:"yearly", name:"Yearly", price:7999, days:365, label:"Best commitment",
+      features:["365-day membership","Long-term fitness journey","One simple annual plan"] }
+  ];
+
+  const $ = id => document.getElementById(id);
+  const money = value => "₹" + Number(value).toLocaleString("en-IN");
+  const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[ch]);
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  let currentUser = null;
+  let authMode = "login";
+  let stopMyRequests = null;
+  let stopOwnerRequests = null;
+
+  $("year").textContent = new Date().getFullYear();
+
+  $("plansGrid").innerHTML = plans.map(plan => `
+    <article class="card ${plan.featured ? "featured" : ""}">
+      <div class="tag">${plan.label}</div>
+      <h3>${plan.name}</h3>
+      <div class="price">${money(plan.price)}</div>
+      <div class="muted">${plan.days} days</div>
+      <ul>${plan.features.map(feature => `<li>${feature}</li>`).join("")}</ul>
+      <button class="btn ${plan.featured ? "primary" : ""}" data-plan="${plan.id}">Choose ${plan.name}</button>
+    </article>`).join("");
+
+  $("planSelect").innerHTML = plans.map(p =>
+    `<option value="${p.id}">${p.name} — ${money(p.price)} (${p.days} days)</option>`
+  ).join("");
+
+  $("plansNav").onclick = () => $("plans").scrollIntoView({behavior:"smooth"});
+  $("accountNav").onclick = () => $("account").scrollIntoView({behavior:"smooth"});
+  $("exploreBtn").onclick = () => $("plans").scrollIntoView({behavior:"smooth"});
+
+  document.querySelectorAll("[data-plan]").forEach(button => {
+    button.onclick = () => {
+      $("planSelect").value = button.dataset.plan;
+      $("account").scrollIntoView({behavior:"smooth"});
+      if (!currentUser) setStatus("authStatus","Sign in to continue.",false);
+    };
+  });
+
+  function setStatus(id, message, error=false) {
+    $(id).textContent = message;
+    $(id).className = "status" + (error ? " error" : " success");
   }
-}
 
+  function setAuthMode(mode) {
+    authMode = mode;
+    $("nameField").classList.toggle("hidden", mode !== "signup");
+    $("authSubmit").textContent = mode === "signup" ? "Create account" : "Sign in";
+    $("showLogin").classList.toggle("primary", mode === "login");
+    $("showSignup").classList.toggle("primary", mode === "signup");
+    $("password").autocomplete = mode === "signup" ? "new-password" : "current-password";
+    setStatus("authStatus","");
+  }
+  $("showLogin").onclick = () => setAuthMode("login");
+  $("showSignup").onclick = () => setAuthMode("signup");
+
+  $("authForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    $("authSubmit").disabled = true;
+    try {
+      const email = $("email").value.trim();
+      const password = $("password").value;
+      if (authMode === "signup") {
+        const name = $("fullName").value.trim();
+        if (!name) throw new Error("Please enter your name.");
+        const result = await createUserWithEmailAndPassword(auth,email,password);
+        await updateProfile(result.user,{displayName:name});
+        setStatus("authStatus","Account created.");
+      } else {
+        await signInWithEmailAndPassword(auth,email,password);
+        setStatus("authStatus","Signed in successfully.");
+      }
+    } catch(error) {
+      setStatus("authStatus",friendlyError(error),true);
+    } finally {
+      $("authSubmit").disabled = false;
+    }
+  });
+
+  $("googleBtn").onclick = async () => {
+    try {
+      await signInWithPopup(auth,googleProvider);
+      setStatus("authStatus","Signed in with Google.");
+    } catch(error) {
+      setStatus("authStatus",friendlyError(error),true);
+    }
+  };
+
+  $("logoutBtn").onclick = () => signOut(auth);
+
+  function friendlyError(error) {
+    const messages = {
+      "auth/email-already-in-use":"This email already has an account. Try signing in.",
+      "auth/invalid-credential":"Email or password is incorrect.",
+      "auth/weak-password":"Choose a stronger password with at least 6 characters.",
+      "auth/popup-blocked":"Allow pop-ups for Google sign-in and try again.",
+      "auth/unauthorized-domain":"Add your GitHub Pages hostname to Firebase Authentication's Authorized domains."
+    };
+    return messages[error.code] || error.message || "Something went wrong.";
+  }
+
+  $("membershipForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!currentUser) {
+      setStatus("membershipStatus","Please sign in first.",true);
+      return;
+    }
+    const plan = plans.find(p => p.id === $("planSelect").value);
+    const customerName = $("memberName").value.trim();
+    const paymentReference = $("paymentReference").value.trim();
+    if (!plan || !customerName || !paymentReference) {
+      setStatus("membershipStatus","Complete every field.",true);
+      return;
+    }
+
+    $("requestSubmit").disabled = true;
+    try {
+      await addDoc(collection(db,"memberships"), {
+        userId:currentUser.uid,
+        email:currentUser.email,
+        customerName,
+        planId:plan.id,
+        planName:plan.name,
+        amount:plan.price,
+        durationDays:plan.days,
+        paymentReference,
+        status:"pending",
+        createdAt:serverTimestamp()
+      });
+      $("paymentReference").value = "";
+      setStatus("membershipStatus","Request submitted. Your membership is pending payment verification.");
+    } catch(error) {
+      setStatus("membershipStatus","Could not submit: " + friendlyError(error),true);
+    } finally {
+      $("requestSubmit").disabled = false;
+    }
+  });
+
+  function renderRequest(id,data,ownerView=false) {
+    const status = ["pending","approved","rejected"].includes(data.status) ? data.status : "pending";
+    const created = data.createdAt?.toDate ? data.createdAt.toDate().toLocaleString("en-IN") : "Just now";
+    const expiry = data.expiresAt?.toDate ? data.expiresAt.toDate().toLocaleDateString("en-IN") : "";
+    return `<div class="request">
+      <div class="request-top">
+        <strong>${escapeHTML(data.customerName || "Member")}</strong>
+        <span class="pill ${status}">${status}</span>
+      </div>
+      <p class="muted">${escapeHTML(data.planName)} · ${money(data.amount)} · ${Number(data.durationDays)||0} days</p>
+      <p>Email: ${escapeHTML(data.email)}</p>
+      <p>Payment reference: <strong>${escapeHTML(data.paymentReference)}</strong></p>
+      <p class="muted">Submitted: ${escapeHTML(created)}</p>
+      ${expiry ? `<p>Membership expiry: ${escapeHTML(expiry)}</p>` : ""}
+      ${ownerView && status === "pending" ? `<div class="actions">
+        <button class="btn primary" data-approve="${escapeHTML(id)}">Approve payment</button>
+        <button class="btn" data-reject="${escapeHTML(id)}">Reject request</button>
+      </div>` : ""}
+    </div>`;
+  }
+
+  function listenToMyRequests(user) {
+    if (stopMyRequests) stopMyRequests();
+    $("myRequests").innerHTML = "<h3>My requests</h3><p class='muted'>Loading…</p>";
+    const q = query(collection(db,"memberships"),where("userId","==",user.uid));
+    stopMyRequests = onSnapshot(q,snapshot => {
+      const docs = snapshot.docs.slice().sort((a,b) =>
+        (b.data().createdAt?.toMillis?.() || 0) - (a.data().createdAt?.toMillis?.() || 0)
+      );
+      $("myRequests").innerHTML = "<h3>My requests</h3>" +
+        (docs.length ? docs.map(d=>renderRequest(d.id,d.data())).join("") :
+        "<p class='muted'>No membership requests yet.</p>");
+    },error => setStatus("membershipStatus","Could not load requests: "+error.message,true));
+  }
+
+  function listenToOwnerRequests() {
+    if (stopOwnerRequests) stopOwnerRequests();
+    $("ownerRequests").innerHTML = "<p class='muted'>Loading requests…</p>";
+    stopOwnerRequests = onSnapshot(collection(db,"memberships"),snapshot => {
+      const docs = snapshot.docs.slice().sort((a,b) =>
+        (b.data().createdAt?.toMillis?.() || 0) - (a.data().createdAt?.toMillis?.() || 0)
+      );
+      $("ownerRequests").innerHTML = docs.length
+        ? docs.map(d=>renderRequest(d.id,d.data(),true)).join("")
+        : "<p class='muted'>No membership requests yet.</p>";
+    },error => setStatus("ownerStatus","Could not load dashboard: "+error.message,true));
+  }
+
+  $("ownerRequests").addEventListener("click",async event => {
+    const approveId = event.target.dataset.approve;
+    const rejectId = event.target.dataset.reject;
+    if (!approveId && !rejectId) return;
+    if (!currentUser || currentUser.email?.toLowerCase() !== OWNER_EMAIL.toLowerCase()) {
+      setStatus("ownerStatus","Owner account required.",true);
+      return;
+    }
+    const id = approveId || rejectId;
+    const status = approveId ? "approved" : "rejected";
+    const update = {status,reviewedAt:serverTimestamp()};
+    if (approveId) {
+      const card = event.target.closest(".request");
+      const text = card?.querySelector(".muted")?.textContent || "";
+      const match = text.match(/(\d+)\s*days/);
+      const days = match ? Number(match[1]) : 30;
+      const expiry = new Date();
+      expiry.setDate(expiry.getDate()+days);
+      update.approvedAt = serverTimestamp();
+      update.expiresAt = Timestamp.fromDate(expiry);
+    }
+    try {
+      await updateDoc(doc(db,"memberships",id),update);
+      setStatus("ownerStatus","Request "+status+".");
+    } catch(error) {
+      setStatus("ownerStatus","Update failed: "+error.message,true);
+    }
+  });
+
+  onAuthStateChanged(auth,user => {
+    currentUser = user;
+    if (stopMyRequests) { stopMyRequests(); stopMyRequests=null; }
+    if (stopOwnerRequests) { stopOwnerRequests(); stopOwnerRequests=null; }
+
+    $("authForms").classList.toggle("hidden",!!user);
+    $("signedInPanel").classList.toggle("hidden",!user);
+    $("logoutBtn").classList.toggle("hidden",!user);
+    $("accountNav").textContent = user ? "My account" : "Login / Join";
+    $("ownerSection").classList.add("hidden");
+    $("myRequests").innerHTML = "";
+
+    if (!user) {
+      $("authHeading").textContent = "Welcome to the club.";
+      $("authDescription").textContent = "Sign in or create an account to get started.";
+      return;
+    }
+
+    $("authHeading").textContent = "You're signed in.";
+    $("authDescription").textContent = "";
+    $("signedInText").textContent = (user.displayName || user.email) + " · " + user.email;
+    $("memberName").value = user.displayName || "";
+    listenToMyRequests(user);
+
+    if (user.email?.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+      $("ownerSection").classList.remove("hidden");
+      listenToOwnerRequests();
+    }
+  });
+
+  if (firebaseConfig.apiKey.includes("PASTE_") || firebaseConfig.projectId.includes("PASTE_")) {
+    setStatus("authStatus","Firebase config is missing.",true);
+  }
+</script>
+</body>
+</html>
