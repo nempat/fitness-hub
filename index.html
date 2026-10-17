@@ -258,6 +258,19 @@ h1 .fire{background:linear-gradient(90deg,#ff5a1f,#ffb48f,#ff5a1f);background-si
 }
 @media(max-width:520px){h1{font-size:62px}.float-card{padding:9px 12px}.float-card strong{font-size:12px}}
 #upiQr:empty{display:none}
+.attendance-box{margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
+.attendance-box h4{font-family:'Anton',Impact,sans-serif;font-size:22px;font-weight:400;text-transform:uppercase;margin-bottom:7px}
+.attendance-consent{display:flex;align-items:flex-start;gap:10px;margin:13px 0;color:#c8c0ba;font-size:11px;line-height:1.5}
+.attendance-consent input{flex:0 0 18px;width:18px;height:18px;margin:2px 0 0;accent-color:var(--green)}
+.attendance-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.attendance-actions .btn{flex:1 1 180px}
+#faceCameraWrap{margin-top:12px;padding:12px;border:1px solid var(--border);background:#0a0807}
+#faceVideo{display:block;width:min(100%,420px);max-height:315px;margin:0 auto 10px;background:#000;object-fit:cover;border:1px solid #5a4a42}
+.face-warning{margin-top:9px;padding:10px;border-left:2px solid var(--green);background:#ff5a1f0b}
+.face-setup{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.face-setup summary{color:var(--green)}
+.face-setup p{margin:9px 0;color:var(--muted);font-size:11px}
+.face-setup pre{max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#0a0807;border:1px solid var(--border);padding:12px;color:#ddd5cf;font-size:10px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -471,8 +484,50 @@ h1 .fire{background:linear-gradient(90deg,#ff5a1f,#ffb48f,#ff5a1f);background-si
       <div class="pgrid">
         <div class="panel">
           <h3>Membership</h3><div id="mStatus"></div>
-          <button class="btn btn-primary" id="checkBtn" style="margin-top:16px;width:100%">CHECK IN TODAY</button>
-          <p class="muted" style="margin-top:8px" id="checkNote"></p>
+          <div class="attendance-box">
+            <h4>Today's Check-in</h4>
+            <p class="muted" id="checkNote"></p>
+            <p class="muted face-warning">Face check-in is optional. Camera frames are processed in this browser; only a numeric face template is saved in this browser. The similarity check can be fooled and does not prove a live person is present. Manual check-in is always available.</p>
+            <label class="attendance-consent" for="faceConsent"><input id="faceConsent" type="checkbox"><span>I consent to create or replace my optional local face template and use the camera for future face comparisons. I understand the template stays in this browser and can be deleted below.</span></label>
+            <div class="attendance-actions">
+              <button class="btn btn-outline" id="faceEnrollBtn" type="button">SET UP FACE CHECK-IN</button>
+              <button class="btn btn-outline" id="faceCheckBtn" type="button">VERIFY FACE &amp; CHECK IN</button>
+              <button class="btn btn-primary" id="checkBtn" type="button">MANUAL CHECK-IN</button>
+            </div>
+            <p class="muted" id="faceTemplateNote"></p>
+            <p class="muted" id="faceStatus" role="status" aria-live="polite"></p>
+            <div id="faceCameraWrap" class="hidden">
+              <video id="faceVideo" autoplay playsinline muted aria-label="Camera preview for optional face check-in"></video>
+              <button class="btn btn-red" id="faceCancelBtn" type="button">STOP CAMERA</button>
+            </div>
+            <button class="btn btn-red hidden" id="forgetFaceBtn" type="button" style="margin-top:10px">DELETE LOCAL FACE TEMPLATE</button>
+            <details class="face-setup">
+              <summary>Owner setup, Firebase rules &amp; security notes</summary>
+              <p>Upload this single index.html to your existing HTTPS host. Face check-in downloads the pinned, MIT-licensed face-api.js 0.22.2 library and model weights from the free jsDelivr CDN only after a member taps Set Up or Verify. No extra files, paid API, Firebase function, or scheduler are required. An internet connection is needed to load those assets. This page does not send camera frames or the local template to the CDN; as with any remotely loaded JavaScript, the CDN script runs with the page's browser permissions, so use a library/CDN you trust.</p>
+              <p>In Firebase Console, keep Email/Password and Google sign-in enabled, keep your hosted domain in Authentication → Settings → Authorized domains, and publish Firestore rules that protect users, payments, and memberships. Merge this attendance match inside the existing <code>match /databases/{database}/documents</code> block; do not replace your other rules. Remove any broader overlapping attendance write rule because Firestore allows are combined.</p>
+              <pre><code>match /attendance/{attendanceId} {
+  allow get: if request.auth != null &amp;&amp;
+    ((request.auth.token.email == 'lokeshraj001100@gmail.com' &amp;&amp;
+      request.auth.token.email_verified == true) ||
+     attendanceId.matches('^' + request.auth.uid + '_[0-9]{4}-[0-9]{2}-[0-9]{2}$'));
+  allow list: if request.auth != null &amp;&amp;
+    ((request.auth.token.email == 'lokeshraj001100@gmail.com' &amp;&amp;
+      request.auth.token.email_verified == true) ||
+     resource.data.uid == request.auth.uid);
+  allow create: if request.auth != null &amp;&amp;
+    request.resource.data.uid == request.auth.uid &amp;&amp;
+    request.resource.data.day is string &amp;&amp;
+    request.resource.data.day.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$') &amp;&amp;
+    attendanceId == request.auth.uid + '_' + request.resource.data.day &amp;&amp;
+    request.resource.data.keys().hasAll(['uid','day','ts','method']) &amp;&amp;
+    request.resource.data.keys().hasOnly(['uid','day','ts','method']) &amp;&amp;
+    request.resource.data.ts == request.time &amp;&amp;
+    request.resource.data.method in ['manual','face'];
+  allow update, delete: if false;
+}</code></pre>
+              <p>Face frames are analyzed in the browser and are not written to Firebase or sent to WhatsApp. The numeric template is biometric data stored in this browser's localStorage; same-origin scripts and people with access to this browser profile can read it. Delete it here to withdraw. The similarity check is not liveness detection, can be fooled, and is not spoof-proof. Client-side code and the <code>method</code> label can be bypassed; these rules prevent replacing an existing daily record and limit access, but cannot prove a person was physically at the gym. Review your privacy obligations before enabling biometric collection.</p>
+            </details>
+          </div>
         </div>
         <div class="panel">
           <h3>Pay &amp; Activate</h3>
@@ -499,7 +554,7 @@ h1 .fire{background:linear-gradient(90deg,#ff5a1f,#ffb48f,#ff5a1f);background-si
         <div class="panel full"><h3>Pending UTR Approvals</h3><div id="oPend"></div></div>
         <div class="panel"><h3>Members</h3><div id="oMem"></div></div>
         <div class="panel"><h3>Today's Attendance</h3><div id="oToday"></div></div>
-        <div class="panel full"><h3>Missed Check-ins</h3><p class="muted" style="margin-bottom:8px">Paid members who haven't checked in today. Tap WhatsApp to message them. Best checked in the evening.</p><div id="oMiss"></div></div>
+        <div class="panel full"><h3>Missed Check-ins</h3><p class="muted" style="margin-bottom:8px">Active members who haven't checked in today. Tap “REVIEW &amp; SEND” to open a prefilled WhatsApp draft, review it, then press Send in WhatsApp. This page never sends messages automatically. Best checked in the evening.</p><div id="oMiss"></div></div>
         <div class="panel full"><h3>Recent Decisions</h3><div id="oHist"></div></div>
       </div>
     </div>
@@ -530,7 +585,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile,
   GoogleAuthProvider, signInWithPopup, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, getDocs, collection, query, where, writeBatch, serverTimestamp, Timestamp }
+import { getFirestore, doc, getDoc, setDoc, getDocs, collection, query, where, writeBatch, runTransaction, serverTimestamp, Timestamp }
   from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 /* ====== 1. PASTE YOUR FIREBASE CONFIG (Project settings → Your apps → Web) ====== */
@@ -563,8 +618,13 @@ const ms = t => t?.toMillis ? t.toMillis() : 0;
 const fmt = t => new Date(typeof t === 'number' ? t : ms(t)).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
 const fmtT = t => new Date(ms(t)).toLocaleString('en-IN', {dateStyle:'medium', timeStyle:'short'});
 const istDay = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
-const waNum = p => { const d = String(p || '').replace(/\D/g, ''); return d.length === 10 ? '91' + d : d; };   // 10-digit Indian numbers get 91 added
+const waNum = p => { const d = String(p || '').replace(/\D/g, ''); return d.length === 10 ? '91' + d : (d.length >= 11 && d.length <= 15 ? d : ''); };   // 10-digit Indian numbers get 91 added
+const FACE_LIBRARY_URL = 'https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js';
+const FACE_MODEL_URL = 'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights/';
+const FACE_MATCH_THRESHOLD = 0.50;
 let mode = 'login', plan = 'quarterly', user = null, authReady = false;
+let memberActive = false, memberDoneToday = false, faceBusy = false, faceCancelled = false;
+let cameraStream = null, faceApiPromise = null;
 
 if (GYM_PHONE) { const w = $('waBtn'); w.href = 'https://wa.me/' + GYM_PHONE; w.classList.remove('hidden'); }
 
@@ -591,6 +651,132 @@ const FIX = {
   'failed-precondition': 'Firestore is not set up. Create the Firestore database in Firebase console'
 };
 const guard = fn => async (...a) => { try { await fn(...a); } catch (e) { console.error(e); toast(FIX[e.code] || (e.message || 'Something went wrong').replace('Firebase: ', '') + (e.code ? ' [' + e.code + ']' : ''), true); } };
+
+/* Optional face matching stays in this browser. No frame or descriptor is sent to Firestore. */
+const faceStorageKey = uid => `fitnessHubFaceTemplate:${uid}`;
+function readFaceTemplate(uid) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(faceStorageKey(uid)) || 'null');
+    if (saved?.version === 1 && Array.isArray(saved.descriptor) && saved.descriptor.length === 128 &&
+        saved.descriptor.every(Number.isFinite) && typeof saved.consentedAt === 'string') return saved;
+  } catch (_) { /* inaccessible or invalid local browser storage */ }
+  return null;
+}
+function renderFaceControls() {
+  const saved = user ? readFaceTemplate(user.uid) : null;
+  $('faceTemplateNote').textContent = saved
+    ? 'A numeric face template is saved in this browser only. It does not sync to other devices.'
+    : 'No face template is saved here. Face check-in is optional.';
+  $('faceEnrollBtn').textContent = saved ? 'REPLACE LOCAL FACE TEMPLATE' : 'SET UP FACE CHECK-IN';
+  $('faceEnrollBtn').disabled = !memberActive || faceBusy;
+  $('faceCheckBtn').disabled = !memberActive || memberDoneToday || !saved || faceBusy;
+  $('checkBtn').disabled = !memberActive || memberDoneToday || faceBusy;
+  $('forgetFaceBtn').classList.toggle('hidden', !saved);
+  $('forgetFaceBtn').disabled = faceBusy;
+}
+function stopFaceCamera() {
+  if (cameraStream) cameraStream.getTracks().forEach(track => track.stop());
+  cameraStream = null;
+  const video = $('faceVideo');
+  if (video) video.srcObject = null;
+  $('faceCameraWrap').classList.add('hidden');
+}
+function loadFaceApi() {
+  if (faceApiPromise) return faceApiPromise;
+  faceApiPromise = (async () => {
+    if (!window.faceapi) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = FACE_LIBRARY_URL;
+        script.async = true;
+        script.crossOrigin = 'anonymous';
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('Could not load the free face-api.js library from jsDelivr. Check your internet connection, or use manual check-in.'));
+        document.head.appendChild(script);
+      });
+    }
+    const api = window.faceapi;
+    if (!api?.nets?.tinyFaceDetector) throw new Error('The local face-api.js file did not load correctly. Manual check-in is still available.');
+    await Promise.all([
+      api.nets.tinyFaceDetector.loadFromUri(FACE_MODEL_URL),
+      api.nets.faceLandmark68Net.loadFromUri(FACE_MODEL_URL),
+      api.nets.faceRecognitionNet.loadFromUri(FACE_MODEL_URL)
+    ]);
+    return api;
+  })().catch(error => {
+    faceApiPromise = null;
+    if (error.message?.includes('jsDelivr') || error.message?.includes('face-api.js file')) throw error;
+    throw new Error(`Could not load face model weights from jsDelivr. Check your internet connection. ${error.message || ''} Manual check-in is still available.`);
+  });
+  return faceApiPromise;
+}
+async function captureFaceDescriptor(api, video) {
+  const options = new api.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.5 });
+  const samples = [];
+  for (let i = 0; i < 4; i++) {
+    if (faceCancelled) return null;
+    const results = await api.detectAllFaces(video, options).withFaceLandmarks().withFaceDescriptors();
+    if (faceCancelled) return null;
+    if (results.length !== 1) throw new Error('Keep one face centered in the camera view, then try again.');
+    samples.push(Array.from(results[0].descriptor));
+    if (i < 3) await new Promise(resolve => setTimeout(resolve, 250));
+  }
+  return samples[0].map((_, index) => samples.reduce((sum, row) => sum + row[index], 0) / samples.length);
+}
+async function runFaceCapture(onDescriptor) {
+  if (faceBusy) return;
+  faceBusy = true; faceCancelled = false;
+  $('faceStatus').textContent = 'Loading the local face models…';
+  $('faceCameraWrap').classList.remove('hidden');
+  renderFaceControls();
+  try {
+    const api = await loadFaceApi();
+    if (faceCancelled) return;
+    if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+      throw new Error('Camera access needs a secure HTTPS page (or localhost) and a supported browser. Manual check-in is available.');
+    }
+    $('faceStatus').textContent = 'Allow camera access when your browser asks. The preview is processed in this browser.';
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+    if (faceCancelled) { stream.getTracks().forEach(track => track.stop()); return; }
+    cameraStream = stream;
+    const video = $('faceVideo');
+    video.srcObject = stream;
+    if (video.readyState < 2) {
+      await new Promise((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error('Camera did not start. Try again or use manual check-in.')), 10000);
+        video.onloadeddata = () => { clearTimeout(timer); resolve(); };
+        video.onerror = () => { clearTimeout(timer); reject(new Error('Could not read the camera preview.')); };
+      });
+    }
+    await video.play();
+    if (faceCancelled) return;
+    $('faceStatus').textContent = 'Hold still and keep one face centered for a moment…';
+    const descriptor = await captureFaceDescriptor(api, video);
+    if (faceCancelled || !descriptor) return;
+    stopFaceCamera();
+    await onDescriptor(api, descriptor);
+  } catch (error) {
+    if (!faceCancelled) throw error;
+  } finally {
+    const wasCancelled = faceCancelled;
+    stopFaceCamera();
+    faceBusy = false; faceCancelled = false;
+    renderFaceControls();
+    if (wasCancelled) $('faceStatus').textContent = 'Camera stopped. You can still check in manually.';
+  }
+}
+async function recordAttendance(method) {
+  const uid = auth.currentUser.uid, day = istDay();
+  const attendanceRef = doc(db, 'attendance', `${uid}_${day}`);
+  const created = await runTransaction(db, async transaction => {
+    const existing = await transaction.get(attendanceRef);
+    if (existing.exists()) return false;
+    transaction.set(attendanceRef, { uid, day, ts: serverTimestamp(), method });
+    return true;
+  });
+  toast(created ? 'Checked in! Your daily record was saved.' : "You're already checked in for today.");
+  await loadMember();
+}
 
 /* ---------- site <-> portal ---------- */
 function openPortal() {
@@ -673,12 +859,14 @@ const loadMember = guard(async () => {
   const att = aS.docs.map(d => d.data()).sort((a, b) => b.day.localeCompare(a.day));
   const pays = pS.docs.map(d => d.data()).sort((a, b) => ms(b.createdAt) - ms(a.createdAt));
   const done = att.some(a => a.day === istDay());
+  memberActive = !!active;
+  memberDoneToday = done;
 
   $('mStatus').innerHTML = !m ? '<div class="big">NOT ACTIVE</div><p class="muted">Pick a plan and submit your UTR to get started.</p>'
     : active ? `<div class="big">${esc(PLANS[m.plan]?.label)} · ACTIVE</div><p class="muted">Valid until ${fmt(m.expires)}</p>`
     : `<div class="big" style="color:var(--red)">EXPIRED</div><p class="muted">Expired on ${fmt(m.expires)}. Renew below.</p>`;
-  $('checkBtn').disabled = !active || done;
   $('checkNote').textContent = !active ? 'Check-in unlocks with an active membership.' : done ? "You're checked in for today. 💪" : '';
+  renderFaceControls();
 
   $('planBox').innerHTML = Object.entries(PLANS).map(([k, p]) =>
     `<label><input type="radio" name="plan" value="${k}" ${k === plan ? 'checked' : ''}><strong>${p.label}</strong>₹${p.price.toLocaleString('en-IN')}<br><span class="muted">${p.days} days</span></label>`).join('');
@@ -710,10 +898,43 @@ $('utrBtn').onclick = guard(async () => {
   });
   $('utr').value = ''; toast('Submitted! Waiting for owner approval.'); loadMember();
 });
-$('checkBtn').onclick = guard(async () => {
-  const uid = auth.currentUser.uid, day = istDay();
-  await setDoc(doc(db, 'attendance', `${uid}_${day}`), { uid, day, ts: serverTimestamp() });
-  toast('Checked in!'); loadMember();
+$('checkBtn').onclick = guard(() => recordAttendance('manual'));
+$('faceEnrollBtn').onclick = guard(async () => {
+  if (!$('faceConsent').checked) throw new Error('Check the consent box before setting up optional face check-in.');
+  const uid = auth.currentUser.uid;
+  await runFaceCapture(async (_api, descriptor) => {
+    localStorage.setItem(faceStorageKey(uid), JSON.stringify({ version: 1, descriptor, consentedAt: new Date().toISOString() }));
+    $('faceConsent').checked = false;
+    $('faceStatus').textContent = 'Face template saved only in this browser. You can delete it below at any time.';
+    toast('Optional face check-in enabled on this browser.');
+    renderFaceControls();
+  });
+});
+$('faceCheckBtn').onclick = guard(async () => {
+  const saved = user && readFaceTemplate(user.uid);
+  if (!saved) throw new Error('Set up face check-in on this browser first, or use manual check-in.');
+  await runFaceCapture(async (api, descriptor) => {
+    const distance = api.euclideanDistance(saved.descriptor, descriptor);
+    if (distance > FACE_MATCH_THRESHOLD) {
+      $('faceStatus').textContent = 'This similarity check did not match. No check-in was saved; try again or use manual check-in.';
+      throw new Error('Face similarity did not match this browser template. No check-in was saved.');
+    }
+    $('faceStatus').textContent = 'Similarity check passed. Saving today’s attendance…';
+    await recordAttendance('face');
+  });
+});
+$('faceCancelBtn').onclick = () => {
+  faceCancelled = true;
+  stopFaceCamera();
+  $('faceStatus').textContent = 'Stopping camera…';
+};
+$('forgetFaceBtn').onclick = guard(async () => {
+  if (!user) return;
+  if (!confirm('Delete the face template saved in this browser? You can still use manual check-in.')) return;
+  localStorage.removeItem(faceStorageKey(user.uid));
+  $('faceStatus').textContent = 'Local face template deleted.';
+  renderFaceControls();
+  toast('Local face template deleted.');
 });
 
 /* ---------- owner ---------- */
@@ -729,24 +950,28 @@ const loadOwner = guard(async () => {
   const nameOf = {}; users.forEach(u => nameOf[u.id] = u.name);
   const allAtt = aS.docs.map(d => d.data());
   const today = allAtt.filter(a => a.day === istDay()).sort((a, b) => ms(b.ts) - ms(a.ts));
+  const todayByUid = new Map();
+  today.forEach(a => { if (a.uid && !todayByUid.has(a.uid)) todayByUid.set(a.uid, a); });
+  const todayUnique = [...todayByUid.values()];
+  const checkedInUids = new Set(todayByUid.keys());
   const last = {}; allAtt.forEach(a => { if (!last[a.uid] || a.day > last[a.uid]) last[a.uid] = a.day; });
   const isAct = u => mem[u.id] && ms(mem[u.id].expires) > Date.now();
 
   $('sPend').textContent = pend.length;
   $('sAct').textContent = users.filter(isAct).length;
-  $('sToday').textContent = today.length;
+  $('sToday').textContent = checkedInUids.size;
   $('oPend').innerHTML = pend.map(p => `<div class="row"><div><b>${esc(p.name)}</b> · ${esc(PLANS[p.plan]?.label)} · ₹${p.amount}<br><span class="muted">UTR <b style="color:#fff">${esc(p.utr)}</b> · ${esc(p.email)} · ${esc(p.phone)} · ${fmtT(p.createdAt)}</span></div><div style="display:flex;gap:8px"><button class="btn btn-primary" style="padding:9px 12px" data-a="approve" data-u="${esc(p.utr)}">APPROVE</button><button class="btn btn-red" style="padding:9px 12px" data-a="reject" data-u="${esc(p.utr)}">REJECT</button></div></div>`).join('') || '<p class="muted">Nothing waiting. 🎉</p>';
   $('oMem').innerHTML = users.map(u => { const m = mem[u.id]; return `<div class="row"><div>${esc(u.name)}<br><span class="muted">${esc(u.email)} ${esc(u.phone)}</span></div><div style="text-align:right"><span class="pill ${m && !isAct(u) ? 'expired' : ''}">${m ? (isAct(u) ? 'active' : 'expired') : 'no plan'}</span>${m ? `<br><span class="muted">${fmt(m.expires)}</span>` : ''}</div></div>`; }).join('') || '<p class="muted">No members yet.</p>';
-  $('oToday').innerHTML = today.map(a => `<div class="row"><span>${esc(nameOf[a.uid] || a.uid)}</span><span class="muted">${fmtT(a.ts)}</span></div>`).join('') || '<p class="muted">No check-ins yet today.</p>';
+  $('oToday').innerHTML = todayUnique.map(a => `<div class="row"><span>${esc(nameOf[a.uid] || a.uid)}</span><span class="muted">${fmtT(a.ts)} · ${esc(a.method || 'manual')}</span></div>`).join('') || '<p class="muted">No check-ins yet today.</p>';
 
-  /* Missed check-ins: paid (active) members with no check-in today, with a WhatsApp message button */
-  const miss = users.filter(u => isAct(u) && !today.some(a => a.uid === u.id));
+  /* Missed check-ins: active members with no check-in today. WhatsApp opens a draft; the owner sends it manually. */
+  const miss = users.filter(u => isAct(u) && !checkedInUids.has(u.id));
   $('oMiss').innerHTML = miss.map(u => {
     const n = waNum(u.phone), m = mem[u.id];
-    const msg = encodeURIComponent(`Hi ${u.name}, we missed you at Fitness Hub today. Your ${PLANS[m.plan]?.label} membership is active until ${fmt(m.expires)}. See you at the gym tomorrow! 💪`);
+    const msg = encodeURIComponent(`Hi ${u.name || 'there'}, we missed you at Fitness Hub today. Your ${PLANS[m.plan]?.label || 'gym'} membership is active until ${fmt(m.expires)}. See you at the gym tomorrow! 💪`);
     const lastTxt = last[u.id] ? fmt(new Date(last[u.id] + 'T00:00:00+05:30').getTime()) : 'never';
-    return `<div class="row"><div>${esc(u.name)}<br><span class="muted">Last visit: ${lastTxt}</span></div>${n ? `<a class="btn btn-primary" style="padding:9px 12px" target="_blank" rel="noopener" href="https://wa.me/${n}?text=${msg}">WHATSAPP</a>` : '<span class="muted">No phone number</span>'}</div>`;
-  }).join('') || '<p class="muted">Every paid member has checked in today. 💪</p>';
+    return `<div class="row"><div>${esc(u.name || 'Member')}<br><span class="muted">Last visit: ${lastTxt}${n ? ` · ${esc(n)}` : ''}</span></div>${n ? `<a class="btn btn-primary" style="padding:9px 12px" target="_blank" rel="noopener" href="https://wa.me/${n}?text=${msg}">REVIEW &amp; SEND ↗</a>` : '<span class="muted">Add a valid phone number to this member profile</span>'}</div>`;
+  }).join('') || '<p class="muted">Every active member has checked in today. 💪</p>';
 
   $('oHist').innerHTML = pays.filter(p => p.status !== 'pending').slice(0, 30).map(p => `<div class="row"><span>${esc(p.name)} · ${esc(PLANS[p.plan]?.label)} · ₹${p.amount} · UTR ${esc(p.utr)}</span><span class="pill ${p.status}">${p.status}</span></div>`).join('') || '<p class="muted">No decisions yet.</p>';
   window._pend = Object.fromEntries(pend.map(p => [p.utr, p]));
