@@ -1,0 +1,74 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+
+    function isOwner() {
+      return signedIn()
+        && request.auth.token.email == 'lokeshraj001100@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    function price(p) {
+      return p == 'monthly' ? 999
+        : p == 'quarterly' ? 2499
+        : p == 'yearly' ? 7999 : -1;
+    }
+
+    function validUserKeys() {
+      return request.resource.data.keys().hasOnly(['name', 'phone', 'email', 'createdAt', 'whatsappAbsenceOptIn']);
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner() || (signedIn() && request.auth.uid == uid);
+      allow create: if signedIn() && request.auth.uid == uid
+        && validUserKeys()
+        && request.resource.data.email == request.auth.token.email;
+      allow update: if signedIn() && request.auth.uid == uid
+        && validUserKeys()
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.createdAt == resource.data.createdAt;
+    }
+
+    match /payments/{utr} {
+      allow read: if isOwner() || (signedIn() && resource.data.uid == request.auth.uid);
+
+      allow create: if signedIn()
+        && utr.matches('[0-9]{12}')
+        && request.resource.data.keys().hasOnly(['uid','name','email','phone','plan','amount','utr','status','createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.utr == utr
+        && request.resource.data.status == 'pending'
+        && request.resource.data.amount == price(request.resource.data.plan)
+        && request.resource.data.createdAt == request.time;
+
+      allow update: if isOwner();
+      allow delete: if false;
+    }
+
+    match /memberships/{uid} {
+      allow read: if isOwner() || (signedIn() && request.auth.uid == uid);
+      allow write: if isOwner();
+    }
+
+    // Attendance is written only by trusted Cloud Functions using Admin SDK.
+    match /attendance/{id} {
+      allow read: if isOwner() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow create, update, delete: if false;
+    }
+
+    // Face profiles and biometric descriptors are never readable/writable by clients.
+    match /faceProfiles/{uid} {
+      allow read, write: if false;
+    }
+
+    // User can read their own notification history; only backend creates records.
+    match /absenceNotifications/{id} {
+      allow read: if isOwner() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow create, update, delete: if false;
+    }
+
+    // Consent state can only be edited on the member's own profile.
+    // All other server-only collections are denied by default.
+  }
+}
