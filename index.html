@@ -499,6 +499,7 @@ h1 .fire{background:linear-gradient(90deg,#ff5a1f,#ffb48f,#ff5a1f);background-si
         <div class="panel full"><h3>Pending UTR Approvals</h3><div id="oPend"></div></div>
         <div class="panel"><h3>Members</h3><div id="oMem"></div></div>
         <div class="panel"><h3>Today's Attendance</h3><div id="oToday"></div></div>
+        <div class="panel full"><h3>Missed Check-ins</h3><p class="muted" style="margin-bottom:8px">Paid members who haven't checked in today. Tap WhatsApp to message them. Best checked in the evening.</p><div id="oMiss"></div></div>
         <div class="panel full"><h3>Recent Decisions</h3><div id="oHist"></div></div>
       </div>
     </div>
@@ -562,6 +563,7 @@ const ms = t => t?.toMillis ? t.toMillis() : 0;
 const fmt = t => new Date(typeof t === 'number' ? t : ms(t)).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
 const fmtT = t => new Date(ms(t)).toLocaleString('en-IN', {dateStyle:'medium', timeStyle:'short'});
 const istDay = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
+const waNum = p => { const d = String(p || '').replace(/\D/g, ''); return d.length === 10 ? '91' + d : d; };   // 10-digit Indian numbers get 91 added
 let mode = 'login', plan = 'quarterly', user = null, authReady = false;
 
 if (GYM_PHONE) { const w = $('waBtn'); w.href = 'https://wa.me/' + GYM_PHONE; w.classList.remove('hidden'); }
@@ -718,14 +720,16 @@ $('checkBtn').onclick = guard(async () => {
 const loadOwner = guard(async () => {
   const [pS, uS, mS, aS] = await Promise.all([
     getDocs(collection(db, 'payments')), getDocs(collection(db, 'users')), getDocs(collection(db, 'memberships')),
-    getDocs(query(collection(db, 'attendance'), where('day', '==', istDay())))
+    getDocs(collection(db, 'attendance'))
   ]);
   const pays = pS.docs.map(d => d.data()).sort((a, b) => ms(b.createdAt) - ms(a.createdAt));
   const pend = pays.filter(p => p.status === 'pending').reverse();
   const mem = {}; mS.forEach(d => mem[d.id] = d.data());
   const users = uS.docs.map(d => ({ id: d.id, ...d.data() }));
   const nameOf = {}; users.forEach(u => nameOf[u.id] = u.name);
-  const today = aS.docs.map(d => d.data()).sort((a, b) => ms(b.ts) - ms(a.ts));
+  const allAtt = aS.docs.map(d => d.data());
+  const today = allAtt.filter(a => a.day === istDay()).sort((a, b) => ms(b.ts) - ms(a.ts));
+  const last = {}; allAtt.forEach(a => { if (!last[a.uid] || a.day > last[a.uid]) last[a.uid] = a.day; });
   const isAct = u => mem[u.id] && ms(mem[u.id].expires) > Date.now();
 
   $('sPend').textContent = pend.length;
@@ -734,6 +738,16 @@ const loadOwner = guard(async () => {
   $('oPend').innerHTML = pend.map(p => `<div class="row"><div><b>${esc(p.name)}</b> · ${esc(PLANS[p.plan]?.label)} · ₹${p.amount}<br><span class="muted">UTR <b style="color:#fff">${esc(p.utr)}</b> · ${esc(p.email)} · ${esc(p.phone)} · ${fmtT(p.createdAt)}</span></div><div style="display:flex;gap:8px"><button class="btn btn-primary" style="padding:9px 12px" data-a="approve" data-u="${esc(p.utr)}">APPROVE</button><button class="btn btn-red" style="padding:9px 12px" data-a="reject" data-u="${esc(p.utr)}">REJECT</button></div></div>`).join('') || '<p class="muted">Nothing waiting. 🎉</p>';
   $('oMem').innerHTML = users.map(u => { const m = mem[u.id]; return `<div class="row"><div>${esc(u.name)}<br><span class="muted">${esc(u.email)} ${esc(u.phone)}</span></div><div style="text-align:right"><span class="pill ${m && !isAct(u) ? 'expired' : ''}">${m ? (isAct(u) ? 'active' : 'expired') : 'no plan'}</span>${m ? `<br><span class="muted">${fmt(m.expires)}</span>` : ''}</div></div>`; }).join('') || '<p class="muted">No members yet.</p>';
   $('oToday').innerHTML = today.map(a => `<div class="row"><span>${esc(nameOf[a.uid] || a.uid)}</span><span class="muted">${fmtT(a.ts)}</span></div>`).join('') || '<p class="muted">No check-ins yet today.</p>';
+
+  /* Missed check-ins: paid (active) members with no check-in today, with a WhatsApp message button */
+  const miss = users.filter(u => isAct(u) && !today.some(a => a.uid === u.id));
+  $('oMiss').innerHTML = miss.map(u => {
+    const n = waNum(u.phone), m = mem[u.id];
+    const msg = encodeURIComponent(`Hi ${u.name}, we missed you at Fitness Hub today. Your ${PLANS[m.plan]?.label} membership is active until ${fmt(m.expires)}. See you at the gym tomorrow! 💪`);
+    const lastTxt = last[u.id] ? fmt(new Date(last[u.id] + 'T00:00:00+05:30').getTime()) : 'never';
+    return `<div class="row"><div>${esc(u.name)}<br><span class="muted">Last visit: ${lastTxt}</span></div>${n ? `<a class="btn btn-primary" style="padding:9px 12px" target="_blank" rel="noopener" href="https://wa.me/${n}?text=${msg}">WHATSAPP</a>` : '<span class="muted">No phone number</span>'}</div>`;
+  }).join('') || '<p class="muted">Every paid member has checked in today. 💪</p>';
+
   $('oHist').innerHTML = pays.filter(p => p.status !== 'pending').slice(0, 30).map(p => `<div class="row"><span>${esc(p.name)} · ${esc(PLANS[p.plan]?.label)} · ₹${p.amount} · UTR ${esc(p.utr)}</span><span class="pill ${p.status}">${p.status}</span></div>`).join('') || '<p class="muted">No decisions yet.</p>';
   window._pend = Object.fromEntries(pend.map(p => [p.utr, p]));
 });
